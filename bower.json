@@ -1,0 +1,26 @@
+{
+  "name": "informal",
+  "description": "Web site Informal",
+  "main": "index.php",
+  "authors": [
+    "José Pérez"
+  ],
+  "license": "ISC",
+  "keywords": [
+    "wordpress",
+    "revista",
+    "informal"
+  ],
+  "homepage": "https://github.com/jolupeza/informal",
+  "moduleType": [],
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "^3.3.6"
+  }
+}

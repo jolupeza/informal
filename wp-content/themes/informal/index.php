@@ -30,8 +30,8 @@
 			<div class="col-md-7">
 				<!-- Aquí irá el calendario -->
 
-				<aside class="Advertising Advertising-300-600">
-					<img src="http://informal.local/public/images/publicidad-300-600.jpg" alt="" />
+				<aside class="Sidebar-advertising">
+					<?php get_sidebar('center-home'); ?>
 				</aside><!-- end Advertising -->
 
 				<section class="Main-popular">
@@ -139,7 +139,7 @@
 			<?php endif; wp_reset_postdata(); ?>
 		</section><!-- end Main-content -->
 		<aside class="Main-sidebar">
-			Lorem ipsum dolor sit amet, consectetur adipisicing elit. Exercitationem earum delectus iure. Iure incidunt pariatur architecto consequuntur, non velit eum laboriosam? Reprehenderit perspiciatis, non beatae mollitia odit, inventore voluptatibus provident?
+			<?php get_sidebar('main-sidebar'); ?>
 		</aside><!-- end Main-sidebar -->
 	</main><!-- end container Main -->
 

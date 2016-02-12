@@ -95,6 +95,7 @@ class Informal_Manager
     private function define_admin_hooks()
     {
         $admin = new Informal_Manager_Admin($this->get_version());
+        $this->loader->add_action('init', $admin, 'add_post_type');
         $this->loader->add_action('admin_enqueue_scripts', $admin, 'enqueue_styles');
         $this->loader->add_action('admin_enqueue_scripts', $admin, 'enqueue_scripts');
         $this->loader->add_action('edit_category_form_fields', $admin, 'extra_category_fields');
@@ -103,9 +104,14 @@ class Informal_Manager
         $this->loader->add_action('save_post', $admin, 'cd_mb_post_save' );
         $this->loader->add_filter('manage_edit-post_columns', $admin, 'custom_columns_post');
         $this->loader->add_action('manage_posts_custom_column', $admin, 'custom_column_post');
+        $this->loader->add_action('add_meta_boxes', $admin, 'cd_mb_banners_add' );
+        $this->loader->add_action('save_post', $admin, 'cd_mb_banners_save' );
+        $this->loader->add_action('add_meta_boxes', $admin, 'cd_mb_subscribers_add' );
+        $this->loader->add_action('save_post', $admin, 'cd_mb_subscribers_save' );
+        $this->loader->add_filter('manage_edit-subscribers_columns', $admin, 'custom_columns_subscribers');
+        $this->loader->add_action('manage_subscribers_posts_custom_column', $admin, 'custom_column_subscribers');
 
-        /*$this->loader->add_action('init', $admin, 'add_post_type');
-        $this->loader->add_filter('manage_edit-postulant_columns', $admin, 'custom_columns_postulant');
+        /*$this->loader->add_filter('manage_edit-postulant_columns', $admin, 'custom_columns_postulant');
         $this->loader->add_action('manage_postulant_posts_custom_column', $admin, 'custom_column_postulant');
         $this->loader->add_filter('views_edit-postulant', $admin, 'postulant_button_view_edit');*/
     }

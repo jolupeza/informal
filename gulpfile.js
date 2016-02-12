@@ -10,8 +10,8 @@ var gulp = require('gulp'),
 var paths = {
 	compass:   ['wp-content/themes/informal/sass/*.sass'],
 	concatcss: [
-		'public/libraries/bootstrap/dist/css/bootstrap.min.css',
-		'public/libraries/formvalidation/dist/css/formValidation.min.css',
+		// 'public/libraries/bootstrap/dist/css/bootstrap.min.css',
+		// 'public/libraries/formvalidation/dist/css/formValidation.min.css',
 		'wp-content/themes/informal/css/style.css'
 	],
 	js: [
@@ -61,7 +61,7 @@ gulp.task('watch', function(){
 	gulp.watch(paths.jshint, ['jshint']);
 	gulp.watch(paths.compass, ['compass']);
 	gulp.watch(paths.js, ['js']);
-	gulp.watch(paths.concatcss, ['concatcss']);
+	// gulp.watch(paths.concatcss, ['concatcss']);
 });
 
 gulp.task('default', ['concatcss', 'jshint', 'js']);

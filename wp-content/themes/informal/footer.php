@@ -29,6 +29,18 @@
 					</article>
 					<article class="Footer-item">
 						<h2 class="Footer-title text-uppercase text-center">Suscríbete</h2>
+
+						<div class="Footer-loader text-center hidden"><img src="<?php echo IMAGES; ?>/loading.gif" /></div>
+						<p class="text-center Footer-about Footer-text--msg"></p>
+
+						<form action="" class="Frm" id="frm-susb">
+							<div class="form-group Frm-group">
+								<label for="mb_email" class="sr-only">Ingresa tu correo</label>
+								<input type="email" class="form-control Frm-input" name="mb_email" id="mb_email" placeholder="Ingresa tu correo" autocomplete="off" data-fv-notempty-message="Ingresa tu correo electrónico" required />
+							</div>
+
+							<button type="submit" class="btn Frm-button center-block">Enviar</button>
+						</form>
 					</article>
 					<article class="Footer-item">
 						<?php
@@ -44,6 +56,9 @@
 				</section><!-- end Footer-wrapper -->
 			</div><!-- end container -->
 		</footer><!-- end Footer -->
+
+		<a href="" class="scrollToTop" title="Ir arriba"><img src="<?php echo IMAGES; ?>/gotop.png" /></a>
+
 		<?php wp_footer(); ?>
 	</body>
 </html>

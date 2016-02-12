@@ -1,5 +1,6 @@
 @import "../../../../public/libraries/bootstrap/dist/css/bootstrap.min.css"
 @import "../../../../public/libraries/formvalidation/dist/css/formValidation.min.css"
+@import "../../../../public/libraries/Slidebars/dist/slidebars.min.css"
 
 @import "compass/css3"
 
@@ -45,6 +46,9 @@ $main_red: #e82026
 body
 	background-color: #f4f4f4
 	font-size: 16px
+	&.admin-bar
+		.Header
+			margin-top: 32px
 
 /* --------------------------- *\
 			HEADER
@@ -73,7 +77,27 @@ body
 .Header-social-item--search
 	a
 		background-position: -60px 0
-
+.Header-bar
+	background-color: $main_red
+	display: inline-block
+	height: 73px
+	left: 0
+	padding: 15px 20px
+	position: absolute
+	top: 0
+	z-index: 9
+.Header-bar-icon
+	background: transparent url('../images/sprites.png') 0 -30px no-repeat
+	cursor: pointer
+	display: block
+	height: 30px
+	width: 30px
+@media only screen and (max-width: 991px)
+	.Header-social-item
+		margin-right: 15px
+		padding: 10px
+		&:last-child
+			margin-right: 0
 
 /* --------------------------- *\
 			MAINMENU
@@ -98,7 +122,30 @@ body
 				text-decoration: none
 		&:last-child
 			margin-right: 0
-
+@media only screen and (max-width: 1050px)
+	.MainMenu
+		li
+			margin-right: 0
+@media only screen and (max-width: 991px)
+	.MainMenu
+		margin-bottom: 25px
+		padding-left: 0
+		li
+			border-bottom: 1px solid #beb1b5
+			border-left: 6px solid #f4f4f4
+			list-style: none
+			margin-bottom: 15px
+			padding: 15px 0 15px 40px
+			a
+				font-size: 1.75em
+			&.current-menu-item, &:hover
+				border-bottom: 1px solid #beb1b5
+				border-left: 6px solid $red
+@media only screen and (max-width: 380px)
+	.MainMenu
+		li
+			a
+				font-size: 1.25em
 /* --------------------------- *\
 			MAIN
 /* --------------------------- */
@@ -188,6 +235,27 @@ body
 		font-size: 0.875em
 		font-weight: 700
 		padding: 5px 15px
+@media only screen and (max-width: 1050px)
+	.Main-featured-item--second
+		max-height: 182px
+@media only screen and (max-width: 991px)
+	.Main-featured-item--first
+		display: block
+		float: none
+		width: 100%
+	.Main-featured-item--second
+		display: block
+		float: none
+		max-height: none
+		width: 100%
+	.Main-featured-category
+		a
+			padding: 15px 20px
+	.Main-featured-info
+		padding: 20px 15px
+	.Main-featured-title
+		margin-top: 30px
+
 .category-rojo
 	background-color: $rojo
 .category-azul
@@ -355,6 +423,8 @@ body
 .Main-lastCategory
 	display: table
 	margin-bottom: 10px
+	table-layout: fixed
+	width: 100%
 .Main-lastCategory-figure
 	display: table-cell
 	vertical-align: top
@@ -372,6 +442,24 @@ body
 	margin-top: 0
 	a
 		color: $title_color
+@media only screen and (max-width: 1050px)
+	.Main-popular
+		width: 40%
+	.Main-sidebar
+		width: 300px
+@media only screen and (max-width: 991px)
+	.Main-popular
+		display: block
+		width: 100%
+	.Main-lastCategory-title
+		font-size: 1.5em
+	.Main-content, .Main-sidebar
+		display: block
+		width: 100%
+@media only screen and (max-width: 767px)
+	.Main-lastCategory-title
+		font-size: 1.25em
+
 
 /* --------------------------- *\
 		ADVERTISING
@@ -386,6 +474,15 @@ body
 .Ad-pd
 	background-color: #ebebeb
 	padding: 40px
+@media only screen and (max-width: 1050px)
+	.Ad-pd
+		padding: 7px
+@media only screen and (max-width: 991px)
+	.Ad-pd
+		padding: 15px
+@media only screen and (max-width: 359px)
+	.Ad-pd
+		padding: 0
 
 /* --------------------------- *\
 			FOOTER
@@ -440,13 +537,32 @@ body
 			color: white
 			font-family: "Roboto"
 			font-weight: 300
-
 .scrollToTop
 	bottom: 100px
 	display: none
 	position: fixed
 	right: 50px
 	z-index: 9
+@media only screen and (max-width: 991px)
+	.Footer-wrapper
+		display: block
+	.Footer-item
+		border-right: none
+		display: block
+		margin-bottom: 30px
+		width: 100%
+	.Footer-tags
+		text-align: center
+		li
+			margin-bottom: 15px
+			margin-right: 10px
+			padding: 15px
+	.Footer-menu
+		li
+			margin-bottom: 15px
+	.scrollToTop
+		display: none !important
+
 
 /* --------------------------- *\
 		SIDEBARWIDGET
@@ -460,7 +576,7 @@ body
 		font-style: italic
 		font-weight: 700
 .Fbpage-wrapper
-	padding: 0 15px
+	text-align: center
 
 /* --------------------------- *\
 				FRM
@@ -494,3 +610,12 @@ body
 
 
 
+/* --------------------------- *\
+			SLIDEBAR
+/* --------------------------- */
+.Slidebar
+	background-color: #f4f4f4
+	padding-top: 25px
+.Slidebar-content
+	background-color: #f4f4f4 !important
+	padding-top: 90px !important

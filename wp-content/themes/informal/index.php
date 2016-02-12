@@ -2,7 +2,7 @@
 
 	<main class="container Main">
 		<!-- Aquí iran las etiquetas -->
-		<aside class="Main-tags">
+		<aside class="Main-tags hidden-xs hidden-sm">
 			<?php
 				$tags = get_tags(array('orderby' => 'count', 'order' => 'DESC', 'number' => 8));
 				if(count($tags)) {
@@ -30,7 +30,7 @@
 			<div class="col-md-7">
 				<!-- Aquí irá el calendario -->
 
-				<aside class="Sidebar-advertising">
+				<aside class="Sidebar-advertising hidden-xs hidden-sm">
 					<?php get_sidebar('center-home'); ?>
 				</aside><!-- end Advertising -->
 

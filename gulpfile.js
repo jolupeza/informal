@@ -12,6 +12,7 @@ var paths = {
 	concatcss: [
 		// 'public/libraries/bootstrap/dist/css/bootstrap.min.css',
 		// 'public/libraries/formvalidation/dist/css/formValidation.min.css',
+		// 'public/libraries/Slidebars/dist/slidebars.min.css',
 		'wp-content/themes/informal/css/style.css'
 	],
 	js: [
@@ -19,6 +20,7 @@ var paths = {
 		'public/libraries/formvalidation/dist/js/formValidation.js',
 		'public/libraries/formvalidation/dist/js/framework/bootstrap.js',
 		'public/libraries/formvalidation/dist/js/language/es_ES.js',
+		'public/libraries/Slidebars/dist/slidebars.js',
 		'wp-content/themes/informal/js/script.js'
 	],
 	jshint: ['wp-content/themes/informal/js/script.js']

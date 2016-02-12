@@ -108,7 +108,7 @@
 
 						echo (!empty($link)) ? '<a href="' . $link . '" title="' . get_the_title() . '" ' . $target . ' >' : '';
 						if(has_post_thumbnail()) {
-							the_post_thumbnail('full', array('class' => 'img-responsive'));
+							the_post_thumbnail('full', array('class' => 'img-responsive center-block'));
 						}
 						echo (!empty($link)) ? '</a>' : '';
 					}

@@ -19,6 +19,9 @@ var j = jQuery.noConflict();
 			j('html, body').animate({scrollTop: 0}, 800);
 		});
 
+		// Mobile Slidebars
+	    j.slidebars();
+
 		// Validation form subscribers
 		j('.Frm').formValidation({
 			locale: 'es_ES',

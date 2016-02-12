@@ -1,3 +1,5 @@
+		</div><!-- end #sb-site -->
+
 		<?php
 			$options = get_option('informal_custom_settings');
 			$logo = (!empty($options['logo_footer'])) ? $options['logo_footer'] : IMAGES . '/logo_footer.png';

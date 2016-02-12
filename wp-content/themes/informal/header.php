@@ -48,7 +48,9 @@
 		$options = get_option('informal_custom_settings');
 		$logo = (!empty($options['logo'])) ? $options['logo'] : IMAGES . '/logo.png';
 	?>
-	<header class="Header">
+	<header class="Header navbar navbar-fixed-top sb-slide" role="navigation">
+		<div class="sb-toggle-left Header-bar hidden-md hidden-lg"><span class="Header-bar-icon"></span></div>
+
 		<div class="container">
 			<div class="row">
 				<div class="col-md-3">
@@ -56,7 +58,7 @@
 						<a href="<?php echo home_url(); ?>" title="<?php bloginfo('name'); ?>"><img class="center-block" src="<?php echo $logo; ?>" alt="<?php bloginfo('name'); ?> | <?php bloginfo('description'); ?>" /></a>
 					</h1>
 				</div>
-				<div class="col-md-6">
+				<div class="col-md-6 hidden-xs hidden-sm">
 					<?php
 						$args = array(
 							'theme_location' => 'main-menu',
@@ -67,7 +69,7 @@
 						wp_nav_menu($args);
 					?>
 				</div>
-				<div class="col-md-3">
+				<div class="col-md-3 hidden-xs hidden-sm">
 					<nav class="Header-social">
 						<ul class="list-inline Header-social-list text-right">
 							<?php if(isset($options['display_social_link']) && $options['display_social_link']) : ?>
@@ -89,3 +91,37 @@
 			</div>
 		</div>
 	</header><!-- end Header -->
+
+	<div class="sb-slidebar sb-left Slidebar">
+		<h1 class="Header-logo text-right">
+			<a href="<?php echo home_url(); ?>" title="<?php bloginfo('name'); ?>"><img class="center-block" src="<?php echo $logo; ?>" alt="<?php bloginfo('name'); ?> | <?php bloginfo('description'); ?>" /></a>
+		</h1><!-- end Header-logo -->
+		<?php
+			$args = array(
+				'theme_location' => 'main-menu',
+				'container' => 'nav',
+				'container_class' => 'Header-mainMenu',
+				'menu_class' => 'MainMenu'
+			);
+			wp_nav_menu($args);
+		?>
+
+		<nav class="Header-social">
+			<ul class="list-inline Header-social-list text-center">
+				<?php if(isset($options['display_social_link']) && $options['display_social_link']) : ?>
+					<?php if(!empty($options['facebook'])) : ?>
+						<li class="Header-social-item Header-social-item--facebook">
+							<a href="https://www.facebook.com/<?php echo $options['facebook']; ?>" class="text-hide" target="_blank" title="Síguenos en facebook">Facebook</a>
+						</li>
+					<?php endif; ?>
+					<?php if(!empty($options['twitter'])) : ?>
+						<li class="Header-social-item Header-social-item--twitter">
+							<a href="https://www.twitter.com/<?php echo $options['twitter']; ?>" class="text-hide" target="_blank" title="Síguenos en twitter">Facebook</a>
+						</li>
+					<?php endif; ?>
+				<?php endif; ?>
+			</ul><!-- end Header-social-list -->
+		</nav><!-- end Header-social -->
+	</div><!-- end Slidebar -->
+
+	<div id="sb-site" class="Slidebar-content">

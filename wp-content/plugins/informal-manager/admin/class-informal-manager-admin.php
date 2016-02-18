@@ -189,6 +189,52 @@ class Informal_Manager_Admin
         }
     }
 
+    // Display Filter SubFeature Posts
+    public function post_table_filtering()
+    {
+        global $wpdb;
+        global $typenow;
+
+        if ($typenow == 'post') {
+            echo '<select name="mb_post" id="filter-by-post">';
+            echo '<option value="0">' . __( 'Mostrar todos los posts', THEMEDOMAIN ) . '</option>';
+
+            $selected = ( !empty($_GET['mb_post']) && $_GET['mb_post'] == 1 ) ? 'selected="selected"' : '';
+            echo '<option value="1" ' . $selected . '>' . __( 'Destacados', THEMEDOMAIN) . '</option>';
+
+            $selected = ( !empty($_GET['mb_post']) && $_GET['mb_post'] == 2 ) ? 'selected="selected"' : '';
+            echo '<option value="2" ' . $selected . '>' . __( 'Subdestacados', THEMEDOMAIN) . '</option>';
+            echo '</select>';
+        }
+    }
+
+    // Filter posts y subfeatured
+    public function post_table_filter($query)
+    {
+        if( !current_user_can('manage_options')) return;
+
+        if(is_admin() && $query->query['post_type'] == 'post') {
+            $qv = &$query->query_vars;
+            $qv['meta_query'] = array();
+
+            if(!empty($_GET['mb_post'])) {
+                if ($_GET['mb_post'] == 1) {
+                    $sticky = get_option('sticky_posts');
+                    $qv['post__in'] = $sticky;
+                }
+
+                if ($_GET['mb_post'] == 2) {
+                    $qv['meta_query'][] = array(
+                        'field' => 'mb_subfeatured',
+                        'value' => 'on',
+                        'compare' => '=',
+                        'type' => 'CHAR'
+                    );
+                }
+            }
+        }
+    }
+
     /**
      * Registers the meta box that will be used to display all of the post meta data
      * associated with the current post.

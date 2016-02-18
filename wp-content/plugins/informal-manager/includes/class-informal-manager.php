@@ -111,6 +111,8 @@ class Informal_Manager
         $this->loader->add_filter('manage_edit-subscribers_columns', $admin, 'custom_columns_subscribers');
         $this->loader->add_action('manage_subscribers_posts_custom_column', $admin, 'custom_column_subscribers');
         $this->loader->add_filter('user_contactmethods', $admin, 'modify_user_contact_methods');
+        $this->loader->add_action('restrict_manage_posts', $admin, 'post_table_filtering');
+        $this->loader->add_filter('parse_query', $admin, 'post_table_filter');
 
         /*$this->loader->add_filter('manage_edit-postulant_columns', $admin, 'custom_columns_postulant');
         $this->loader->add_action('manage_postulant_posts_custom_column', $admin, 'custom_column_postulant');

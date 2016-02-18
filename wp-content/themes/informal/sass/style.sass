@@ -45,6 +45,7 @@ $main_red: #e82026
 /* --------------------------- */
 body
 	background-color: #f4f4f4
+	color: $title_color
 	font-size: 16px
 	&.admin-bar
 		.Header
@@ -151,6 +152,7 @@ body
 /* --------------------------- */
 .Main
 	background-color: #fff
+	margin-bottom: 10px
 	padding-bottom: 15px
 	padding-top: 15px
 // .Main-tags
@@ -418,6 +420,51 @@ body
 		// font-size: 1em
 		font-weight: 500
 		padding: 0
+.Main-content-readmore
+	background-color: #e8e8e8
+	margin: 10px 0
+	padding: 10px 0
+	p
+		font-family: "Roboto"
+		font-style: italic
+		font-size: 1.75em
+		line-height: 1.1em
+		margin-bottom: 0
+		a
+			color: $title_color
+.Main-content-item--single
+	padding-right: 15px
+	.Main-content-category
+		margin-bottom: 15px
+	.Main-content-text
+		margin-bottom: 20px
+	p
+		color: $title_color
+		font-family: "Roboto"
+		font-weight: 300
+.Main-single-figure
+	margin-bottom: 10px
+.Main-single-tags
+	font-family: "Roboto"
+	font-weight: 700
+	margin: 15px 0
+	text-transform: uppercase
+	a
+		background-color: #FFF
+		border: 1px solid #c5c5c5
+		+border-radius(5px)
+		color: $title_color
+		font-family: 'Source Sans Pro'
+		font-size: 0.875em
+		font-weight: 700
+		margin: 0 5px
+		padding: 5px 10px
+		+transition(all 0.2s ease)
+		&:hover
+			background-color: $main_red
+			border: 1px solid $main_red
+			color: white
+			text-decoration: none
 .Main-sidebar
 	width: 380px
 .Main-lastCategory
@@ -442,11 +489,56 @@ body
 	margin-top: 0
 	a
 		color: $title_color
+.Main-content-metaauthor
+	border: 1px solid #c5c5c5
+	margin-top: 20px
+	padding: 15px
+.Main-content-avatar, .Main-content-metaauthor-info
+	display: inline-block
+	vertical-align: top
+.Main-content-avatar
+	margin-right: 15px
+	padding: 10px
+	width: 148px
+	img
+		border: 8px solid #cacaca
+.Main-content-metaauthor-info
+	width: 75%
+.Main-content-metaauthor-name
+	font-family: "Roboto"
+	font-size: 1.375em
+	font-weight: 700
+	margin-top: 0
+	a
+		color: $title_color
+.Main-content-metaauthor-desc
+	color: $title_color
+	font-weight: 300
+.Metaauthor-fb, .Metaauthor-tw
+	a
+		background-color: transparent
+		background-image: url("../images/sprites.png")
+		background-repeat: no-repeat
+		display: block
+		height: 20px
+		width: 20px
+.Metaauthor-fb
+	a
+		background-position: -30px -30px
+		&:hover
+			background-position: -70px -30px
+.Metaauthor-tw
+	a
+		background-position: -50px -30px
+		&:hover
+			background-position: -90px -30px
 @media only screen and (max-width: 1050px)
 	.Main-popular
 		width: 40%
 	.Main-sidebar
 		width: 300px
+	.Main-content-metaauthor-info
+		width: 70%
 @media only screen and (max-width: 991px)
 	.Main-popular
 		display: block
@@ -456,10 +548,17 @@ body
 	.Main-content, .Main-sidebar
 		display: block
 		width: 100%
+	.Main-content
+		margin-right: 0
+	.Main-content-item--single
+		padding-right: 0
 @media only screen and (max-width: 767px)
 	.Main-lastCategory-title
 		font-size: 1.25em
-
+@media only screen and (max-width: 500px)
+	.Main-content-avatar, .Main-content-metaauthor-info
+		display: block
+		width: 100%
 
 /* --------------------------- *\
 		ADVERTISING
@@ -474,6 +573,27 @@ body
 .Ad-pd
 	background-color: #ebebeb
 	padding: 40px
+.Advertising
+	background-color: #ebebeb
+	margin-bottom: 10px
+	padding: 15px
+	#js-banner-large
+		width: 100%
+	#js-banner-short
+		display: none
+		width: 100%
+.Ad-readmore
+	background-color: $main_red
+	display: inline-block
+	padding: 5px
+	a
+		color: white
+		font-family: "Roboto"
+		font-weight: 300
+		&:link, &:hover
+			text-decoration: none
+	&:hover
+		background-color: $main_purple
 @media only screen and (max-width: 1050px)
 	.Ad-pd
 		padding: 7px
@@ -491,7 +611,7 @@ body
 	background-color: $main_purple
 	border-top: 5px solid $main_red
 	color: white
-	margin-top: 15px
+	margin-top: 10px
 	padding-bottom: 50px
 	padding-top: 30px
 .Footer-wrapper
@@ -568,6 +688,7 @@ body
 		SIDEBARWIDGET
 /* --------------------------- */
 .SidebarWidget
+	margin-bottom: 15px
 	h4
 		border-bottom: 3px solid #2d4d87
 		color: #2d4d87
@@ -575,8 +696,43 @@ body
 		font-size: 1.5em
 		font-style: italic
 		font-weight: 700
+		margin-top: 0
+.Widget-titleBg
+	background-color: #292137
+	color: white
+	display: block
+	padding: 5px 10px
 .Fbpage-wrapper
 	text-align: center
+
+.PostsPopular
+	border-bottom: 1px solid #b5b0bd
+	display: table
+	margin-bottom: 10px
+	padding-bottom: 10px
+	table-layout: fixed
+	width: 100%
+.PostsPopular-image, .PostsPopular-info
+	display: table-cell
+	vertical-align: top
+.PostsPopular-image
+	width: 40%
+.PostsPopular-info
+	padding: 0 0 10px 10px
+	width: 60%
+.PostsPopular-title
+	color: $title_color
+	font-family: "Roboto"
+	font-size: 1em
+	font-weight: 700
+	margin-top: 0
+	a
+		color: $title_color
+.PostsPopular-time
+	font-family: "Roboto"
+	font-size: 0.875em
+	span
+		color: $morado
 
 /* --------------------------- *\
 				FRM
@@ -619,3 +775,285 @@ body
 .Slidebar-content
 	background-color: #f4f4f4 !important
 	padding-top: 90px !important
+
+
+/* -----------------------------*\
+        	$COMMENTS
+/*------------------------------*/
+.comments-area
+	margin-top: 2em
+	// padding: 0 15px
+.comment-reply-title
+	color: $main_red
+	font-family: "Roboto"
+	font-size: 1.375em
+	font-weight: bold
+	padding-bottom: 3px
+.article-add-comment
+	display: inline-block
+	width: 48px
+	height: 53px
+	background: transparent url('../images/sprites.png') -384px -64px no-repeat
+	float: right
+	&:hover
+		background: transparent url('../images/sprites.png') -432px -64px no-repeat
+
+.commentslist
+	counter-reset: comment-id
+	margin: 2em 0
+	padding-left: 0
+	li
+		list-style: none
+		article
+			border: 1px solid #c5c5c5
+			margin-bottom: 2em
+			padding: 1em
+			.comment-avatar, .comment-wrapper
+				display: inline-block
+				vertical-align: top
+			.comment-avatar
+				margin-right: 15px
+			.comment-wrapper
+				position: relative
+				width: 85%
+				&::before
+					color: #999
+					content: counter(comment-id)
+					counter-increment: comment-id
+					font-size: 48px
+					line-height: 1em
+					position: absolute
+					right: 0
+					top: 0
+			.comment-info
+				h4
+					color: $main_purple
+					font-family: "Roboto"
+					font-style: italic
+					font-weight: bold
+					margin-bottom: .2em
+					margin-top: 0
+					a
+						font-weight: normal
+				p
+					color: #2e2a2a
+					font-family: "Roboto"
+					font-weight: 300
+					span
+						font-style: italic
+
+			header
+				//border-bottom: 1px solid #f1f1f1
+				margin-bottom: 1em
+				font-size: 12px
+				position: relative
+
+				p
+					color: #5e5d5d
+					font-family: "Roboto"
+					font-size: 1.17em
+					margin-bottom: 0
+					span
+						font-style: italic
+				h4
+					color: #5e5d5d
+					font-family: "Roboto"
+					font-style: italic
+					font-weight: bold
+					margin-bottom: .2em
+					margin-top: 0
+					a
+						font-weight: normal
+				&::before
+					color: #999
+					content: counter(comment-id)
+					counter-increment: comment-id
+					font-size: 48px
+					line-height: 1em
+					position: absolute
+					right: 0
+					top: 0
+
+				.comment-avatar
+					display: inline-block
+					margin-right: 15px
+					vertical-align: top
+					// img
+					// 	//float: right
+					// 	margin-left: 2em
+					// 	margin-bottom: 1em
+				.comment-info
+					display: inline-block
+					vertical-align: top
+			.awaiting-moderation
+				color: #c9c9c9
+				font-style: italic
+
+			&.comment-author-admin
+				border: 1px solid #bebebe
+
+				h4
+					span
+						font: normal 10px Helvetica, Arial, "Lucida Grande", sans-serif
+						text-transform: uppercase
+						background: #282b2f
+						-webkit-border-radius: 5px
+						border-radius: 5px
+						-moz-background-clip: padding
+						-webkit-background-clip: padding-box
+						background-clip: padding-box
+						color: white
+						padding: .5em
+						margin: 0 1em 0 0
+						display: inline-block
+
+			h4
+				span
+					display: none
+
+			.comment-text
+				background-color: #FFF
+				border: 1px solid rgba(black, 0.2)
+				// margin-left: 90px
+				padding: 10px
+				p
+					font-weight: 300
+		ol, ul
+			padding-left: 3em
+			margin-left: 2em
+			border-left: 1px dotted #d7d7d7
+
+			li
+				position: relative
+				&::before
+					content: ''
+					width: 2em
+					height: 1px
+					border-bottom: 1px dotted #d7d7d7
+					left: -2.5em
+					top: 3em
+					position: absolute
+
+	article
+		ul, ol
+			border: none
+			padding-left: 0
+			&::before
+				content: ''
+				display: none
+		> ul, > ol
+			margin-bottom: 2em
+		ol
+			li
+				list-style: decimal
+		ul
+			li
+				list-style: disc
+
+#comment-form
+	p
+		label
+			display: none
+			font-size: 12px
+
+		input[type='text'], input[type='email'], input[type='url'], textarea
+			border: 1px solid rgba(black, 0.28)
+			font-family: "Roboto"
+			font-size: 0.875em
+			margin-right: 1em
+			padding: 8px 10px
+			width: 50%
+		textarea
+			margin-right: 0
+			width: 100%
+	p
+		&.form-submit
+			text-align: right
+			input[type='submit']
+				background-color: $main_red
+				border: none
+				color: white
+				font-family: "Roboto"
+				font-size: 1em
+				padding: 10px 15px
+				+transition(all 0.2s ease)
+				&:hover
+					background-color: $main_purple
+@media only screen and (max-width: 1050px)
+	.commentslist
+		li
+			article
+				.comment-wrapper
+					width: 82%
+@media only screen and (max-width: 500px)
+	#comment-form
+		p
+			input[type='text'], input[type='email'], input[type='url'], textarea
+				width: 100%
+	.commentslist
+		li
+			article
+				header
+					&::before
+						display: none
+				.comment-text
+					margin-left: 0
+			ol, ul
+				margin-left: 1em
+				padding-left: 1em
+				li
+					&::before
+						left: -1em
+						width: 1em
+
+.comment-nav-section
+	margin-bottom: 2em
+	border-bottom: 1px solid #d7d7d7
+
+.allowed-tags
+	margin: 2em 0
+	font-size: 12px
+
+#cancel-comment-reply-link
+	font-size: 12px
+	display: block
+	font-family: Helvetica, Arial, "Lucida Grande", sans-serif
+	margin-top: 1em
+@media only screen and (max-width: 991px)
+	#comment-form
+		p
+			&.form-submit
+				text-align: center
+				input[type="submit"]
+					font-size: 1em
+					padding: 15px 25px
+	#comment-form p input[type="email"],
+	#comment-form p input[type="text"],
+	#comment-form p input[type="url"]
+		height: 54px
+	#comment-form p input[type="email"],
+	#comment-form p input[type="text"],
+	#comment-form p input[type="url"],
+	#comment-form p textarea
+		border: none
+		border-bottom: 1px solid rgba(0,0,0,0.28)
+		padding: 10px
+@media only screen and (max-width: 500px)
+	.commentslist
+		li
+			article
+				.comment-wrapper
+					width: 76%
+@media only screen and (max-width: 400px)
+	.commentslist
+		li
+			article
+				.comment-avatar, .comment-wrapper
+					display: block
+					width: 100%
+				.comment-avatar
+					margin-right: 0
+					text-align: center
+
+
+

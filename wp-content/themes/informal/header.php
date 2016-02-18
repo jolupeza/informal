@@ -27,7 +27,7 @@
     <![endif]-->
 
     <!-- PictureFill -->
-    <script src="https://cdn.rawgit.com/scottjehl/picturefill/master/dist/picturefill.min.js"></script>
+    <!-- <script src="https://cdn.rawgit.com/scottjehl/picturefill/master/dist/picturefill.min.js"></script> -->
 
     <!-- Script required for extra functionality on the comment form -->
 	<?php if (is_singular()) wp_enqueue_script( 'comment-reply' ); ?>

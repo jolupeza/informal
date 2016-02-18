@@ -18,7 +18,8 @@
 			$defaults = array(
 				'title' => '',
 				'banner' => '',
-				'padding' => 'off'
+				'padding' => 'off',
+				'dropdown' => 'off'
 			);
 
 			$instance = wp_parse_args((array) $instance, $defaults);
@@ -56,6 +57,12 @@
 				<label for="<?php echo $this->get_field_id('padding') ?>"><?php _e('Con padding:', THEMEDOMAIN); ?></label>
 				<input type="checkbox" class="widefat" id="<?php echo $this->get_field_id('padding'); ?>" name="<?php echo $this->get_field_name('padding'); ?>" value="on" <?php checked( $instance['padding'], 'on' ); ?> />
 			</p>
+
+			<!-- Desplegable -->
+			<p>
+				<label for="<?php echo $this->get_field_id('dropdown') ?>"><?php _e('Desplegable:', THEMEDOMAIN); ?></label>
+				<input type="checkbox" class="widefat" id="<?php echo $this->get_field_id('dropdown'); ?>" name="<?php echo $this->get_field_name('dropdown'); ?>" value="on" <?php checked( $instance['dropdown'], 'on' ); ?> />
+			</p>
 			<?php
 		}
 
@@ -66,8 +73,9 @@
 			$instance['title'] = strip_tags($new_instance['title']);
 
 			// The Code
-			$instance['banner']  = $new_instance['banner'];
-			$instance['padding'] = $new_instance['padding'];
+			$instance['banner']   = $new_instance['banner'];
+			$instance['padding']  = $new_instance['padding'];
+			$instance['dropdown'] = $new_instance['dropdown'];
 
 			return $instance;
 		}
@@ -81,6 +89,7 @@
 			// Get the ad
 			$banner = (int)$instance['banner'];
 			$padding = (isset($instance['padding']) && $instance['padding'] === 'on') ? 'Ad-pd' : '';
+			$dropdown = (isset($instance['dropdown']) && $instance['dropdown'] === 'on') ? true : false;
 
 			echo $before_widget;
 
@@ -103,16 +112,27 @@
 						$id = get_the_id();
 						$values = get_post_custom($id);
 						$link   = isset( $values['mb_link'] ) ? esc_attr( $values['mb_link'][0] ) : '';
+						$image = isset( $values['mb_image'] ) ? esc_attr( $values['mb_image'][0] ) : '';
 						$target = isset( $values['mb_target'] ) ? esc_attr( $values['mb_target'][0] ) : '';
 						$target = (!empty($target) && $target === 'on') ? 'target="_blank"' : '';
 
 						echo (!empty($link)) ? '<a href="' . $link . '" title="' . get_the_title() . '" ' . $target . ' >' : '';
-						if(has_post_thumbnail()) {
-							the_post_thumbnail('full', array('class' => 'img-responsive center-block'));
+						if($dropdown && !empty($image)) {
+							echo '<img src="' . $image . '" id="js-banner-large" class="img-responsive center-block" />';
 						}
+						if(has_post_thumbnail()) {
+							the_post_thumbnail('full', array('class' => 'img-responsive center-block', 'id' => ($dropdown) ? 'js-banner-short' : ''));
+						}
+
 						echo (!empty($link)) ? '</a>' : '';
 					}
+
+					if($dropdown && !empty($image)) {
+						echo '<div class="Ad-readmore"><a class="active" href="" id="js-view-banner">ocultar publicidad</a></div>';
+					}
 				}
+
+				wp_reset_postdata();
 			}
 
 			echo '</div>';

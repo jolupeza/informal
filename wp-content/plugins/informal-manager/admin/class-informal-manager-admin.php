@@ -363,6 +363,22 @@ class Informal_Manager_Admin
     }
 
     /**
+     * Modify user methods contact of user
+     *
+     * @param  arr $user_contact Array contain user method contact.
+     * @return arr               Array with user method contact custom add.
+     */
+    public function modify_user_contact_methods( $user_contact )
+    {
+        // Add user contact methods
+        $user_contact['facebook'] = __( 'Facebook Uername' , THEMEDOMAIN  );
+        $user_contact['twitter']  = __( 'Twitter Username', THEMEDOMAIN );
+        $user_contact['youtube']  = __( 'Youtube Username', THEMEDOMAIN );
+
+        return $user_contact;
+    }
+
+    /**
      * Add custom content type.
      */
     public function add_post_type()

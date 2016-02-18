@@ -110,6 +110,7 @@ class Informal_Manager
         $this->loader->add_action('save_post', $admin, 'cd_mb_subscribers_save' );
         $this->loader->add_filter('manage_edit-subscribers_columns', $admin, 'custom_columns_subscribers');
         $this->loader->add_action('manage_subscribers_posts_custom_column', $admin, 'custom_column_subscribers');
+        $this->loader->add_filter('user_contactmethods', $admin, 'modify_user_contact_methods');
 
         /*$this->loader->add_filter('manage_edit-postulant_columns', $admin, 'custom_columns_postulant');
         $this->loader->add_action('manage_postulant_posts_custom_column', $admin, 'custom_column_postulant');

@@ -83,7 +83,7 @@
 				</article><!-- end PostsPopular -->
 		<?php
 			}
-
+			wp_reset_postdata();
 			echo $after_widget;
 		}
 	}

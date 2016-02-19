@@ -14,9 +14,15 @@
 	<?php
 		$values = get_post_custom( get_the_ID() );
     	$subfeatured = isset( $values['mb_subfeatured'] ) ? esc_attr( $values['mb_subfeatured'][0] ) : '';
+    	$featured = isset( $values['mb_featured'] ) ? esc_attr( $values['mb_featured'][0] ) : '';
 
 		wp_nonce_field( 'post_meta_box_nonce', 'meta_box_nonce' );
 	?>
+
+	<p class="content-mb">
+		<label for="mb_featured">Destacado por Categoría:</label>
+		<input type="checkbox" name="mb_featured" id="mb_featured" <?php checked($featured, 'on'); ?> />
+	</p>
 
 	<p class="content-mb">
 		<label for="mb_subfeatured">Subdestacado:</label>

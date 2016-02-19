@@ -93,6 +93,8 @@ var j = jQuery.noConflict();
 
 			var $this = j(this);
 			var paged = parseInt($this.data('paged'));
+			var author = $this.data('author');
+			var category = $this.data('category');
 			var loader = j('.Main-content-loader');
 			var content = j('.Main-content-wrapper');
 
@@ -102,7 +104,9 @@ var j = jQuery.noConflict();
 				j.post(InformalAjax.url, {
 					nonce: InformalAjax.nonce,
 					action: 'get_posts',
-					paged: paged
+					paged: paged,
+					author: author,
+					category: category
 				}, function(data){
 					loader.addClass('hidden');
 					if(data.result) {

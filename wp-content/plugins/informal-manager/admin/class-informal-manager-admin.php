@@ -153,6 +153,10 @@ class Informal_Manager_Admin
         // if our current user can't edit this post, bail
         if( !current_user_can( 'edit_post', $post_id ) ) return;
 
+        // Save meta custom mb_featured
+        $featured = isset( $_POST['mb_featured'] ) && $_POST['mb_featured'] ? 'on' : 'off';
+        update_post_meta( $post_id, 'mb_featured', $featured );
+
         // Save meta custom mb_subfeatured
         $subfeatured = isset( $_POST['mb_subfeatured'] ) && $_POST['mb_subfeatured'] ? 'on' : 'off';
         update_post_meta( $post_id, 'mb_subfeatured', $subfeatured );
@@ -170,6 +174,7 @@ class Informal_Manager_Admin
     public function custom_columns_post($columns)
     {
         $new_columns = array(
+            'featured'    => __('Destacado por Categoría', $this->domain),
             'subfeatured' => __('Sub-destacado', $this->domain)
         );
         return array_merge($columns, $new_columns);
@@ -182,6 +187,10 @@ class Informal_Manager_Admin
         $values = get_post_custom($post->ID);
 
         switch ($column) {
+            case 'featured':
+                $featured = (isset($values['mb_featured']) && esc_attr($values['mb_featured'][0]) === 'on' ) ? '<span class="dashicons dashicons-yes"></span>' : '<span class="dashicons dashicons-no"></span>';
+                echo $featured;
+                break;
             case 'subfeatured':
                 $subfeatured = (isset($values['mb_subfeatured']) && esc_attr($values['mb_subfeatured'][0]) === 'on' ) ? '<span class="dashicons dashicons-yes"></span>' : '<span class="dashicons dashicons-no"></span>';
                 echo $subfeatured;
@@ -203,7 +212,10 @@ class Informal_Manager_Admin
             echo '<option value="1" ' . $selected . '>' . __( 'Destacados', THEMEDOMAIN) . '</option>';
 
             $selected = ( !empty($_GET['mb_post']) && $_GET['mb_post'] == 2 ) ? 'selected="selected"' : '';
-            echo '<option value="2" ' . $selected . '>' . __( 'Subdestacados', THEMEDOMAIN) . '</option>';
+            echo '<option value="2" ' . $selected . '>' . __( 'Destacados por Categoría', THEMEDOMAIN) . '</option>';
+
+            $selected = ( !empty($_GET['mb_post']) && $_GET['mb_post'] == 3 ) ? 'selected="selected"' : '';
+            echo '<option value="3" ' . $selected . '>' . __( 'Subdestacados', THEMEDOMAIN) . '</option>';
             echo '</select>';
         }
     }
@@ -225,10 +237,19 @@ class Informal_Manager_Admin
 
                 if ($_GET['mb_post'] == 2) {
                     $qv['meta_query'][] = array(
-                        'field' => 'mb_subfeatured',
-                        'value' => 'on',
+                        'key'   => 'mb_featured',
+                        'value'   => 'on',
                         'compare' => '=',
-                        'type' => 'CHAR'
+                        'type'    => 'CHAR'
+                    );
+                }
+
+                if ($_GET['mb_post'] == 3) {
+                    $qv['meta_query'][] = array(
+                        'key'   => 'mb_subfeatured',
+                        'value'   => 'on',
+                        'compare' => '=',
+                        'type'    => 'CHAR'
                     );
                 }
             }

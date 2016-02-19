@@ -1,12 +1,25 @@
 <?php
 	$sticky = get_option('sticky_posts');
 	if(count($sticky)) {
-		$args = array(
-			'posts_per_page' => 3,
-			'post__in' => $sticky,
-			'ignore_sticky_posts' => 1,
-			'post_status' => 'publish'
-		);
+		if($currentCat) {
+			$args = array(
+				'cat' => $currentCat,
+				'meta_query' => array(
+				    array(
+				        'key'   => 'mb_featured',
+				        'value' => 'on'
+				    )
+				)
+			);
+		} else {
+			$args = array(
+				'posts_per_page' => 3,
+				'post__in' => $sticky,
+				'ignore_sticky_posts' => 1,
+				'post_status' => 'publish'
+			);
+		}
+
 		$the_query = new WP_Query($args);
 		if($the_query->have_posts()) :
 			$i = 0;

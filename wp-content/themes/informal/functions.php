@@ -214,20 +214,40 @@ function get_posts_callback()
         die('¡Acceso denegado!');
     }
 
-    $paged = (int)$_POST['paged'];
+    $paged    = (int)$_POST['paged'];
+    $author   = $_POST['author'];
+    $category = $_POST['category'];
+    $paged++;
 
     if ($paged > 0) {
-        $args = array(
-            'post__not_in'   => get_option('sticky_posts'),
-            'meta_query' => array(
-                array(
-                    'key'   => 'mb_subfeatured',
-                    'value' => 'off'
-                )
-            ),
-            'paged' => $paged,
-            // 'post_type' => 'post'
-        );
+        if(!$author && !$category) {
+            $args =  array(
+                'post__not_in'   => get_option('sticky_posts'),
+                'meta_query' => array(
+                    array(
+                        'key'   => 'mb_subfeatured',
+                        'value' => 'off'
+                    )
+                ),
+                'paged' => $paged,
+            );
+        } elseif($author && !$category) {
+            $args = array(
+                'author' => $author,
+                'paged'  => $paged,
+            );
+        } elseif($category && !$author) {
+            $args = array(
+                'cat'          => $category,
+                'paged'        => $paged,
+                'meta_query' => array(
+                    array(
+                        'key'   => 'mb_featured',
+                        'value' => 'off'
+                    )
+                ),
+            );
+        }
 
         $the_query = new WP_Query($args);
 

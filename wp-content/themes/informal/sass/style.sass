@@ -161,42 +161,36 @@ body
 	height: 34px
 	margin-right: 15px
 	padding: 5px 0
-	a
-		font-family: "Roboto"
-		font-weight: 700
-.Main-tags-item--first
-	background-color: #eb1555
-	color: white
 	font-family: "Roboto"
 	font-style: italic
 	font-weight: 700
 	position: relative
+	// a
+	// 	font-family: "Roboto"
+	// 	font-weight: 700
+.Main-tags-item--first, .Main-tags-item--azul
+	color: white
 	&::after
 		border-right: 15px solid transparent
-		border-top: 34px solid #eb1555
 		content: ""
 		height: 0
 		position: absolute
 		right: -15px
 		top: 0
 		width: 0
+.Main-tags-item--first
+	background-color: #eb1555
+	&::after
+		border-top: 34px solid #eb1555
+.Main-tags-item--azul
+	background-color: $azul
+	&::after
+		border-top: 34px solid $azul
 .Main-subtitle
 	font-family: "Roboto"
 	font-size: 1.5em
 	font-style: italic
 	font-weight: 700
-.Main-subtitle--rojo
-	border-bottom: 3px solid $rojo
-	color: $rojo
-.Main-subtitle--azul
-	border-bottom: 3px solid $azul
-	color: $azul
-.Main-subtitle--morado
-	border-bottom: 3px solid $morado
-	color: $morado
-.Main-subtitle--naranja
-	border-bottom: 3px solid $naranja
-	color: $naranja
 .Main-featured
 	margin-bottom: 10px
 	overflow: hidden
@@ -257,15 +251,6 @@ body
 		padding: 20px 15px
 	.Main-featured-title
 		margin-top: 30px
-
-.category-rojo
-	background-color: $rojo
-.category-azul
-	background-color: $azul
-.category-morado
-	background-color: $morado
-.category-naranja
-	background-color: $naranja
 
 // .Main-subfeatured
 .Main-subfeatured-item

@@ -5,7 +5,7 @@
 	</div>
 
 	<main class="container Main">
-		<!-- Aquí iran las etiquetas -->
+		<!-- Etiquetas -->
 		<aside class="Main-tags hidden-xs hidden-sm">
 			<?php
 				$tags = get_tags(array('orderby' => 'count', 'order' => 'DESC', 'number' => 8));
@@ -59,8 +59,7 @@
 					$color = (isset($catMeta['mb_colour']) && !empty($catMeta['mb_colour'])) ? esc_attr($catMeta['mb_colour']) : '';
 			?>
 				<div class="col-md-4">
-					<h3 class="Main-subtitle Main-subtitle--<?php echo $color; ?>">#<?php echo $category->name; ?></h3>
-
+					<h3 class="Main-subtitle" style="border-bottom: 3px solid <?php echo $color; ?>; color: <?php echo $color; ?>">#<?php echo $category->name; ?></h3>
 					<?php
 						$args = array(
 							'posts_per_page' => 3,
@@ -119,7 +118,7 @@
 									<?php the_post_thumbnail('full', array('class' => 'img-responsive')); ?>
 									<?php if($first) : ?>
 										<aside class="Main-content-figure-category">
-											<a href="<?php echo get_category_link($categories[0]->cat_ID); ?>" class="category-<?php echo $color; ?>"><?php echo $categories[0]->name; ?></a>
+											<a href="<?php echo get_category_link($categories[0]->cat_ID); ?>" style="background-color: <?php echo $color; ?>"><?php echo $categories[0]->name; ?></a>
 										</aside>
 									<?php endif; ?>
 								</figure>
@@ -128,7 +127,7 @@
 							<div class="Main-content-info">
 								<?php if(!$first) : ?>
 									<aside class="Main-content-category">
-										<a href="<?php echo get_category_link($categories[0]->cat_ID); ?>" class="category-<?php echo $color; ?>"><?php echo $categories[0]->name; ?></a>
+										<a href="<?php echo get_category_link($categories[0]->cat_ID); ?>" style="background-color: <?php echo $color; ?>"><?php echo $categories[0]->name; ?></a>
 										Por <span class="Main-content-author"><?php the_author_posts_link(); ?></span>
 									</aside>
 								<?php endif; ?>

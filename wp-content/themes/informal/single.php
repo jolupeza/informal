@@ -15,7 +15,7 @@
 							$color = (isset($catMeta['mb_colour']) && !empty($catMeta['mb_colour'])) ? esc_attr($catMeta['mb_colour']) : '';
 						?>
 						<aside class="Main-content-category">
-							<a href="<?php echo get_category_link($categories[0]->cat_ID); ?>" class="category-<?php echo $color; ?>"><?php echo $categories[0]->name; ?></a>
+							<a href="<?php echo get_category_link($categories[0]->cat_ID); ?>" style="background-color: <?php echo $color; ?>"><?php echo $categories[0]->name; ?></a>
 						</aside>
 
 						<h2 class="Main-content-title"><?php the_title(); ?></h2>

@@ -17,12 +17,9 @@
 		<label for="mb_colour"><?php _e('Color de la categoría', THEMEDOMAIN); ?></label>
 	</th>
 	<td>
-	    <select name="mb_colour" id="mb_colour">
-	    	<option value="">-- Indicar color --</option>
-	    	<?php foreach($colores as $key => $value ) : ?>
-				<option value="<?php echo $key; ?>" <?php selected( $colour, $key ); ?> style="background-color: #<?php echo $value; ?>; color: white;"><?php echo $key; ?></option>
-			<?php endforeach ?>
-	    </select>
-        <span class="description"><?php _e('Seleccionar el color de la categoría', THEMEDOMAIN); ?></span>
+		<input type="text" name="mb_colour" id="mb_colour" value="<?php echo $colour; ?>" />
+        <p class="description">
+        	<span class="description"><?php _e('Indicar el color de la categoría', THEMEDOMAIN); ?></span>
+        </p>
 	</td>
 </tr>

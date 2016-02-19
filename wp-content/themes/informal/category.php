@@ -1,7 +1,29 @@
 <?php get_header(); ?>
 
 	<main class="container Main">
-		<?php $currentCat = get_cat_id(single_cat_title("", false)); ?>
+		<?php
+			$currentCat = get_cat_id(single_cat_title("", false));
+			$catMeta = get_option("category_" . $currentCat);
+			$color = (isset($catMeta['mb_colour']) && !empty($catMeta['mb_colour'])) ? esc_attr($catMeta['mb_colour']) : '';
+		?>
+
+		<!-- Etiquetas -->
+		<aside class="Main-tags hidden-xs hidden-sm">
+			<?php
+				$categories = get_categories(array('parent' => $currentCat, 'orderby' => 'count', 'order' => 'DESC', 'number' => 8));
+				if(count($categories)) {
+			?>
+				<ul class="Main-tags-list list-inline">
+					<li class="Main-tags-item Main-tags-item--first Main-tags-item--<?php echo $color; ?> text-uppercase">Categorías</li>
+					<?php foreach($categories as $category) : ?>
+						<?php $category_link = get_category_link($category->term_id); ?>
+						<li class="Main-tags-item text-uppercase"><a href="<?php echo esc_url($category_link); ?>" title="<?php echo $category->name; ?>"><?php echo $category->name; ?></a></li>
+					<?php endforeach; ?>
+				</ul>
+			<?php
+				}
+			?>
+		</aside><!-- end Main-tags -->
 
 		<!-- Post featured -->
 		<?php include(TEMPLATEPATH . '/includes/featured-posts.php') ?>
@@ -38,7 +60,7 @@
 									<?php the_post_thumbnail('full', array('class' => 'img-responsive')); ?>
 									<?php if($first) : ?>
 										<aside class="Main-content-figure-category">
-											<a href="<?php echo get_category_link($categories[0]->cat_ID); ?>" class="category-<?php echo $color; ?>"><?php echo $categories[0]->name; ?></a>
+											<a href="<?php echo get_category_link($categories[0]->cat_ID); ?>" style="background-color: <?php echo $color; ?>"><?php echo $categories[0]->name; ?></a>
 										</aside>
 									<?php endif; ?>
 								</figure>
@@ -47,7 +69,7 @@
 							<div class="Main-content-info">
 								<?php if(!$first) : ?>
 									<aside class="Main-content-category">
-										<a href="<?php echo get_category_link($categories[0]->cat_ID); ?>" class="category-<?php echo $color; ?>"><?php echo $categories[0]->name; ?></a>
+										<a href="<?php echo get_category_link($categories[0]->cat_ID); ?>" style="background-color: <?php echo $color; ?>"><?php echo $categories[0]->name; ?></a>
 										Por <span class="Main-content-author"><?php the_author_posts_link(); ?></span>
 									</aside>
 								<?php endif; ?>

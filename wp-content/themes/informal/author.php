@@ -1,9 +1,5 @@
 <?php get_header(); ?>
 
-	<div class="container">
-		<div class="row"><?php get_sidebar('adv-top'); ?></div>
-	</div>
-
 	<main class="container Main">
 		<section class="Main-content">
 			<?php if(have_posts()) : ?>
@@ -54,7 +50,7 @@
 
 								<div class="Main-content-info">
 									<aside class="Main-content-category">
-										<a href="<?php echo get_category_link($categories[0]->cat_ID); ?>" class="category-<?php echo $color; ?>"><?php echo $categories[0]->name; ?></a>
+										<a href="<?php echo get_category_link($categories[0]->cat_ID); ?>" style="background-color: <?php echo $color; ?>"><?php echo $categories[0]->name; ?></a>
 										Por <span class="Main-content-author"><?php the_author_posts_link(); ?></span>
 									</aside>
 

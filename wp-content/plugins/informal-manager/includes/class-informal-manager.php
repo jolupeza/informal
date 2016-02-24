@@ -113,6 +113,8 @@ class Informal_Manager
         $this->loader->add_filter('user_contactmethods', $admin, 'modify_user_contact_methods');
         $this->loader->add_action('restrict_manage_posts', $admin, 'post_table_filtering');
         $this->loader->add_filter('parse_query', $admin, 'post_table_filter');
+        $this->loader->add_action('pre_get_posts', $admin, 'remove_pages_wp_search');
+        $this->loader->add_action('wp_head', $admin, 'wpb_track_post_views');
 
         /*$this->loader->add_filter('manage_edit-postulant_columns', $admin, 'custom_columns_postulant');
         $this->loader->add_action('manage_postulant_posts_custom_column', $admin, 'custom_column_postulant');

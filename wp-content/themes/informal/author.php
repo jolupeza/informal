@@ -11,13 +11,15 @@
 						$authorDescription = get_user_meta($authorId, 'description', true);
 						$authorFacebook = get_user_meta($authorId, 'facebook', true);
 						$authorTwitter = get_user_meta($authorId, 'twitter', true);
+						$authorBlog = get_user_meta($authorId, 'blog', true);
 					?>
 					<aside class="Main-content-metaauthor">
 						<figure class="Main-content-avatar">
 							<?php echo get_avatar($authorId, 128, '', false, array('class' => 'img-circle center-block')); ?>
 						</figure><!-- end Main-content-avatar -->
 						<div class="Main-content-metaauthor-info">
-							<h3 class="Main-content-metaauthor-name"><?php the_author_posts_link(); ?></h3>
+							<h4 class="Main-content-metaauthor-blog"><?php echo $authorBlog; ?></h4>
+							<h3 class="Main-content-metaauthor-name"><?php the_author(); ?></h3>
 							<p class="Main-content-metaauthor-desc"><?php echo $authorDescription; ?></p>
 
 							<?php if(!empty($authorFacebook) || !empty($authorTwitter)) : ?>
@@ -71,7 +73,7 @@
 						<div class="Main-content-loader text-center hidden"><img src="<?php echo IMAGES; ?>/loading.gif" /></div>
 
 						<div class="Main-content-readmore">
-							<p class="text-center"><a href="" id="js-readmore-content" data-paged="<?php echo $paged; ?>" data-author="<?php echo $authorId; ?>" data-category="0">Ver más</a></p>
+							<p class="text-center"><a href="" id="js-readmore-content" data-paged="<?php echo $paged; ?>" data-author="<?php echo $authorId; ?>" data-category="0" data-search="0" data-tag="0">Ver más</a></p>
 						</div><!-- end Main-content-readmore -->
 				<?php endif; ?>
 			<?php endif; ?>

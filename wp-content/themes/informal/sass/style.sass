@@ -28,13 +28,13 @@
 /* --------------------------- */
 $purple: #706772
 $purple_dark: #3b1342
+$purple_soft: #93319f
 $red: #dc1b54
 
 $rojo: #f30632
 $azul: #1568e3
 $morado: #4906f3
 $naranja: #e28e0a
-
 
 $title_color: #2e2a2a
 $main_purple: #4d1d55
@@ -58,6 +58,8 @@ body
 	background-color: #FFF
 	+box-shadow(rgba(black, 0.3) 2px 2px 10px)
 	margin-bottom: 15px
+.Header-wrapper
+	position: relative
 .Header-logo, .Header-social
 	margin-top: 10px
 // .Header-social-list
@@ -78,7 +80,7 @@ body
 .Header-social-item--search
 	a
 		background-position: -60px 0
-.Header-bar
+.Header-bar, .Header-search
 	background-color: $main_red
 	display: inline-block
 	height: 73px
@@ -87,6 +89,16 @@ body
 	position: absolute
 	top: 0
 	z-index: 9
+.Header-search
+	background-color: transparent
+	left: auto
+	right: 0
+.Header-search-icon
+	background: transparent url('../images/sprites.png') -60px 0 no-repeat
+	cursor: pointer
+	display: block
+	height: 30px
+	width: 30px
 .Header-bar-icon
 	background: transparent url('../images/sprites.png') 0 -30px no-repeat
 	cursor: pointer
@@ -115,7 +127,7 @@ body
 			font-size: 1.125em
 			text-transform: uppercase
 			+transition(all 0.2s ease)
-		&.current-menu-item, &:hover
+		&.current-menu-item, &:hover, &.current-post-ancestor, &.current-category-ancestor
 			border-bottom: 6px solid $red
 			a
 				color: $purple_dark
@@ -123,10 +135,45 @@ body
 				text-decoration: none
 		&:last-child
 			margin-right: 0
+.Category-info
+	background-color: #FFF
+	display: none
+	min-height: 217px
+	padding: 20px 0
+	position: absolute
+	width: 100%
+.Category-list
+	margin-bottom: 0
+	padding-left: 0
+.Category-item
+	border-bottom: 1px solid #5f5f5f
+	list-style: none
+	padding: 10px 0
+	position: relative
+	a
+		color: #5f5f5f
+		font-family: "Roboto"
+		&:hover
+			text-decoration: none
+	&::after
+		background: transparent url('../images/sprites.png') -90px 0 no-repeat
+		bottom: 15px
+		content: ""
+		height: 10px
+		position: absolute
+		right: 10px
+		width: 10px
+.CaretMenu
+	cursor: pointer
+.Category-loader
+	left: 45%
+	position: absolute
+	top: 40%
 @media only screen and (max-width: 1050px)
 	.MainMenu
 		li
 			margin-right: 0
+			padding: 0 5px
 @media only screen and (max-width: 991px)
 	.MainMenu
 		margin-bottom: 25px
@@ -158,6 +205,7 @@ body
 // .Main-tags
 // .Main-tags-list
 .Main-tags-item
+	color: white
 	height: 34px
 	margin-right: 15px
 	padding: 5px 0
@@ -165,11 +213,10 @@ body
 	font-style: italic
 	font-weight: 700
 	position: relative
-	// a
-	// 	font-family: "Roboto"
-	// 	font-weight: 700
-.Main-tags-item--first, .Main-tags-item--azul
-	color: white
+	a
+		color: $main_red
+		&:hover
+			color: $main_purple
 	&::after
 		border-right: 15px solid transparent
 		content: ""
@@ -179,13 +226,9 @@ body
 		top: 0
 		width: 0
 .Main-tags-item--first
-	background-color: #eb1555
+	background-color: $main_purple
 	&::after
-		border-top: 34px solid #eb1555
-.Main-tags-item--azul
-	background-color: $azul
-	&::after
-		border-top: 34px solid $azul
+		border-top: 34px solid $main_purple
 .Main-subtitle
 	font-family: "Roboto"
 	font-size: 1.5em
@@ -403,7 +446,7 @@ body
 .Main-content-author
 	a
 		color: #4906f3
-		// font-size: 1em
+		font-family: "Roboto"
 		font-weight: 500
 		padding: 0
 .Main-content-readmore
@@ -490,6 +533,11 @@ body
 		border: 8px solid #cacaca
 .Main-content-metaauthor-info
 	width: 75%
+.Main-content-metaauthor-blog
+	color: $purple_soft
+	font-family: "Roboto"
+	font-size: 1.125em
+	margin-top: 0
 .Main-content-metaauthor-name
 	font-family: "Roboto"
 	font-size: 1.375em
@@ -538,6 +586,22 @@ body
 		margin-right: 0
 	.Main-content-item--single
 		padding-right: 0
+	.Main-content-figure-category
+		top: 25px
+		a
+			padding: 15px 20px
+	.Main-content-category
+		a
+			padding: 10px 15px
+	.Main-content-item
+		&.Main-content-item--second
+			.Main-content-info
+				padding: 15px
+			.Main-content-title
+				margin-top: 25px
+	.Main-content-author
+		a
+			padding: 0
 @media only screen and (max-width: 767px)
 	.Main-lastCategory-title
 		font-size: 1.25em
@@ -545,7 +609,17 @@ body
 	.Main-content-avatar, .Main-content-metaauthor-info
 		display: block
 		width: 100%
-
+@media only screen and (max-width: 450px)
+	.Main-subfeatured-item
+		&.Main-subfeatured-item--second
+			.Main-subfeatured-info, .Main-subfeatured-image
+				display: block
+				width: 100%
+	.Main-content-item
+		&.Main-content-item--second
+			.Main-content-figure, .Main-content-info
+				display: block
+				width: 100%
 /* --------------------------- *\
 		ADVERTISING
 /* --------------------------- */
@@ -719,7 +793,9 @@ body
 	font-size: 0.875em
 	span
 		color: $morado
-
+@media only screen and (max-width: 991px)
+	.PostsPopular-title
+		font-size: 1.375em
 /* --------------------------- *\
 				FRM
 /* --------------------------- */
@@ -763,6 +839,87 @@ body
 	padding-top: 90px !important
 
 
+/* --------------------------- *\
+			FORMAT
+/* --------------------------- */
+.Format
+	background-color: transparent
+	background-image: url("../images/sprites.png")
+	background-repeat: no-repeat
+	display: inline-block
+	height: 31px
+	margin-right: 5px
+	vertical-align: middle
+	width: 30px
+.Format-standar
+	background-position: -30px -60px
+.Format-video
+	background-position: 0 -60px
+.Format-gallery
+	background-position: -60px -60px
+.Format-chat
+	background-position: -90px -60px
+
+/* --------------------------- *\
+			SEARCH
+/* --------------------------- */
+.Search
+	background-color: $main_purple
+	display: none
+	position: absolute
+	right: 15px
+	width: 310px
+	z-index: 9
+// .Search-form
+.Search-input
+	background-color: #E7E7E7
+	border: 1px solid $main_purple
+	float: left
+	font-family: "Roboto"
+	font-weight: 300
+	padding: 18px
+	width: 250px
+.Search-submit
+	background-color: $main_purple
+	background-image: url("../images/search.png")
+	background-position: center center
+	background-repeat: no-repeat
+	border: 1px solid $main_purple
+	cursor: pointer
+	float: left
+	height: 60px
+	width: 60px
+.Search-results
+	margin-bottom: 20px
+	h4
+		color: #b3b3b3
+		font-family: "Roboto"
+		font-size: 1.375em
+		font-weight: 700
+		span
+			color: $title_color
+.NoPosts
+	h1
+		color: $title_color
+		font-family: "Roboto"
+		font-weight: 700
+@media only screen and (max-width: 991px)
+	.Search
+		right: 0
+		width: 100%
+	.Search-input
+		width: 85%
+	.Search-submit
+		width: 15%
+@media only screen and (max-width: 767px)
+	.Search
+		right: 15px
+		width: 90%
+@media only screen and (max-width: 400px)
+	.Search-input
+		width: 80%
+	.Search-submit
+		width: 20%
 /* -----------------------------*\
         	$COMMENTS
 /*------------------------------*/
@@ -1041,5 +1198,60 @@ body
 					margin-right: 0
 					text-align: center
 
+
+
+/* -----------------------------*\
+    	$MAIN-RELATED
+/*------------------------------*/
+// .Main-related
+.Main-related-titleSection
+	border-bottom: 4px solid #26124b
+	color: #26124b
+	font-family: "Roboto"
+	font-size: 1.375em
+	font-weight: 700
+	margin-top: 0
+	padding-bottom: 3px
+.Main-related-item
+	display: table
+	margin-bottom: 15px
+	table-layout: fixed
+	width: 100%
+.Main-related-figure, .Main-related-info
+	display: table-cell
+	vertical-align: top
+.Main-related-figure
+	padding-right: 15px
+	width: 40%
+.Main-related-info
+	width: 60%
+	p
+		color: #2e2a2a
+		font-family: "Roboto"
+		font-weight: 300
+		a
+			color: #4906f3
+.Main-related-category
+	color: #2e2a2a
+	font-family: "Roboto"
+	font-size: 0.875em
+	margin-bottom: 5px
+	>
+		a
+			+border-radius(3px)
+			color: white
+			display: inline-block
+			margin-right: 5px
+			padding: 5px 8px
+.Main-related-author
+	a
+		color: #4906f3
+		font-weight: 500
+.Main-related-title
+	font-family: "Roboto"
+	font-size: 1.375em
+	font-weight: bold
+	a
+		color: #2e2a2a
 
 

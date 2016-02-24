@@ -6,6 +6,8 @@ define('THEMEROOT', get_stylesheet_directory_uri());
 define('IMAGES', THEMEROOT . '/images');
 define('THEMEDOMAIN', 'informal-framework');
 
+remove_action( 'wp_head', 'adjacent_posts_rel_link_wp_head', 10, 0);
+
 /***********************************************************/
 /* Load JS Files */
 /***********************************************************/
@@ -20,7 +22,7 @@ add_action('wp_enqueue_scripts', 'load_custom_scripts');
 /* Add Theme Support for Post Formats, Post Thumbnails and Automatic Feed Links */
 /********************************************************************************/
 if(function_exists('add_theme_support')) {
-	add_theme_support('post-formats', array('link', 'quote', 'gallery', 'video'));
+	add_theme_support('post-formats', array('link', 'quote', 'gallery', 'video', 'chat'));
 	add_theme_support('post-thumbnails', array('post', 'page', 'banners'));
 
 	add_theme_support('automatic-feed-links');
@@ -39,6 +41,52 @@ function register_my_menus()
     );
 }
 add_action('init', 'register_my_menus');
+
+/***********************************************************/
+/* Menu Walker Main Menu */
+/***********************************************************/
+class Informal_menu_main_walker extends Walker_Nav_Menu
+{
+    public function start_el ( &$output, $item, $depth = 0, $args = array(), $id = 0 )
+    {
+        $indent = ( $depth ) ? str_repeat( "\t", $depth ) : '';
+        $class_names = '';
+
+        $classes = empty( $item->classes ) ? array() : (array) $item->classes;
+        $classes[] = 'menu-item-' . $item->ID;
+
+        $class_names = join( ' ', apply_filters( 'nav_menu_css_class', array_filter( $classes ), $item, $args ) );
+        $class_names = ' class="' . esc_attr( $class_names ) . '"';
+
+        $output .= $indent . '<li id="menu-item-' . $item->ID . '"' . $class_names .'>';
+        $attributes  = ! empty( $item->attr_title ) ? ' title="'  . esc_attr( $item->title ) . ' ' . esc_attr( $item->attr_title ) .'"' : '';
+        $attributes .= ! empty( $item->target )     ? ' target="' . esc_attr( $item->target     ) .'"' : '';
+        $attributes .= ! empty( $item->xfn )        ? ' rel="'    . esc_attr( $item->xfn        ) .'"' : '';
+
+        $content    = apply_filters( 'the_title', $item->title, $item->ID );
+        $title      = apply_filters( 'the_title', $item->attr_title, $item->ID );
+
+        $attributes .= ' href="' . $item->url . '"';
+
+        $item_output = $args->before;
+
+        $item_output .= '<a ' . $attributes . ' >';
+        $item_output .= $args->link_before . $content . $args->link_after;
+        $item_output .= '</a>';
+
+        if ('category' == $item->object) {
+            /*$idCategory = $item->object_id;
+            $catMeta = get_option("category_" . $idCategory);
+            $color = (isset($catMeta['mb_colour']) && !empty($catMeta['mb_colour'])) ? esc_attr($catMeta['mb_colour']) : '';*/
+
+            $item_output .= ' <span class="caret CaretMenu" data-id="' . $item->object_id . '"></span>';
+        }
+
+        $item_output .= $args->after;
+
+        $output .= apply_filters( 'walker_nav_menu_start_el', $item_output, $item, $depth, $args );
+    }
+}
 
 /***********************************************************************************************/
 /* Add Sidebar Support */
@@ -217,10 +265,12 @@ function get_posts_callback()
     $paged    = (int)$_POST['paged'];
     $author   = $_POST['author'];
     $category = $_POST['category'];
+    $tag      = $_POST['tag'];
+    $search   = $_POST['search'];
     $paged++;
 
     if ($paged > 0) {
-        if(!$author && !$category) {
+        if(!$author && !$category && !$tag && !$search) {
             $args =  array(
                 'post__not_in'   => get_option('sticky_posts'),
                 'meta_query' => array(
@@ -231,12 +281,12 @@ function get_posts_callback()
                 ),
                 'paged' => $paged,
             );
-        } elseif($author && !$category) {
+        } elseif($author && !$category && !$tag && !$search) {
             $args = array(
                 'author' => $author,
                 'paged'  => $paged,
             );
-        } elseif($category && !$author) {
+        } elseif($category && !$author && !$tag && !$search) {
             $args = array(
                 'cat'          => $category,
                 'paged'        => $paged,
@@ -246,6 +296,19 @@ function get_posts_callback()
                         'value' => 'off'
                     )
                 ),
+            );
+        } elseif($search && !$author && !$tag && !$category) {
+            $search = sanitize_text_field($search);
+            $args = array(
+                's'         => $search,
+                'post_type' => 'post',
+                'paged'     => $paged,
+            );
+        } elseif($tag && !$author && !$category && !$search) {
+            $tag = sanitize_text_field($tag);
+            $args = array(
+                'tag'   => $tag,
+                'paged' => $paged
             );
         }
 
@@ -266,6 +329,49 @@ function get_posts_callback()
         }
 
         $result['paged'] = ($the_query->max_num_pages == $paged) ? false : $result['paged'];
+    }
+
+    wp_reset_postdata();
+    echo json_encode($result);
+    die();
+}
+
+/***********************************************************/
+/* Get posts via ajax */
+/***********************************************************/
+add_action('wp_ajax_get_menu', 'get_menu_callback');
+add_action('wp_ajax_nopriv_get_menu', 'get_menu_callback');
+
+function get_menu_callback()
+{
+    $nonce = $_POST['nonce'];
+    $result = array('result' => false);
+
+    if (!wp_verify_nonce($nonce, 'informalajax-nonce')) {
+        die('¡Acceso denegado!');
+    }
+
+    $id    = (int)$_POST['id'];
+
+    if ($id > 0) {
+        $currentCat = get_category($id);
+
+        $catMeta = get_option("category_" . $currentCat->cat_ID);
+        $color = (isset($catMeta['mb_colour']) && !empty($catMeta['mb_colour'])) ? esc_attr($catMeta['mb_colour']) : '';
+        $categories = get_categories(array('parent' => $currentCat->cat_ID, 'orderby' => 'count', 'order' => 'DESC'));
+
+        if(count($categories)) {
+            ob_start();
+
+            include TEMPLATEPATH . '/includes/menu-category.php';
+
+            $content = ob_get_contents();
+
+            ob_get_clean();
+
+            $result['result'] = true;
+            $result['content'] = $content;
+        }
     }
 
     wp_reset_postdata();

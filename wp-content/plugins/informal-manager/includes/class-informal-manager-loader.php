@@ -49,9 +49,9 @@ class Informal_Manager_Loader
      * @param object $component The object that contains the method to be called when the hook is fired.
      * @param string $callback  The function that resides on the specified component.
      */
-    public function add_action($hook, $component, $callback)
+    public function add_action($hook, $component, $callback, $priority = 10, $args = 1)
     {
-        $this->actions = $this->add($this->actions, $hook, $component, $callback);
+        $this->actions = $this->add($this->actions, $hook, $component, $callback, $priority, $args);
     }
 
     /**
@@ -62,9 +62,9 @@ class Informal_Manager_Loader
      * @param object $component The object that contains the method to be called when the hook is fired.
      * @param string $callback  The function that resides on the specified component.
      */
-    public function add_filter($hook, $component, $callback)
+    public function add_filter($hook, $component, $callback, $priority = 10, $args = 1)
     {
-        $this->filters = $this->add($this->filters, $hook, $component, $callback);
+        $this->filters = $this->add($this->filters, $hook, $component, $callback, $priority, $args);
     }
 
     /**
@@ -79,12 +79,14 @@ class Informal_Manager_Loader
      *
      * @return array The collection of hooks that are registered with WordPress via this class.
      */
-    private function add($hooks, $hook, $component, $callback)
+    private function add($hooks, $hook, $component, $callback, $priority, $args)
     {
         $hooks[] = array(
-            'hook' => $hook,
+            'hook'      => $hook,
             'component' => $component,
-            'callback' => $callback,
+            'callback'  => $callback,
+            'priority'  => $priority,
+            'args'      => $args
         );
 
         return $hooks;
@@ -96,11 +98,11 @@ class Informal_Manager_Loader
     public function run()
     {
         foreach ($this->filters as $hook) {
-            add_filter($hook['hook'], array($hook['component'], $hook['callback']));
+            add_filter($hook['hook'], array($hook['component'], $hook['callback']), $hook['priority'], $hook['args']);
         }
 
         foreach ($this->actions as $hook) {
-            add_action($hook['hook'], array($hook['component'], $hook['callback']));
+            add_action($hook['hook'], array($hook['component'], $hook['callback']), $hook['priority'], $hook['args']);
         }
     }
 }

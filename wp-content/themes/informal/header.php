@@ -51,7 +51,9 @@
 	<header class="Header navbar navbar-fixed-top sb-slide" role="navigation">
 		<div class="sb-toggle-left Header-bar hidden-md hidden-lg"><span class="Header-bar-icon"></span></div>
 
-		<div class="container">
+		<div class="sb-toggle-right Header-search hidden-md hidden-lg"><span class="Header-search-icon js-display-search"></span></div>
+
+		<div class="container Header-wrapper">
 			<div class="row">
 				<div class="col-md-3">
 					<h1 class="Header-logo text-right">
@@ -64,7 +66,8 @@
 							'theme_location' => 'main-menu',
 							'container' => 'nav',
 							'container_class' => 'Header-mainMenu',
-							'menu_class' => 'MainMenu list-inline'
+							'menu_class' => 'MainMenu list-inline',
+							'walker' => new Informal_menu_main_walker()
 						);
 						wp_nav_menu($args);
 					?>
@@ -84,12 +87,27 @@
 									</li>
 								<?php endif; ?>
 							<?php endif; ?>
-							<li class="Header-social-item Header-social-item--search"><a href="" class="text-hide">Buscar</a></li>
+							<li class="Header-social-item Header-social-item--search js-display-search"><a href="#" class="text-hide">Buscar</a></li>
 						</ul><!-- end Header-social-list -->
 					</nav><!-- end Header-social -->
 				</div>
 			</div>
+			<div class="Search">
+				<form method="get" class="Search-form" action="<?php echo home_url(); ?>">
+					<input class="Search-input" type="text" name="s" id="s" placeholder="¿Qué deseas buscar?" />
+					<input class="Search-submit text-hide" type="submit" value="Buscar" />
+				</form>
+			</div><!-- end Search -->
 		</div>
+
+
+		<?php if(is_category()) : ?>
+			<aside class="Category-info">
+				<div class="Category-loader text-center hidden"><img src="<?php echo IMAGES; ?>/loading.gif" /></div>
+				<div class="container">
+				</div><!-- end container -->
+			</aside><!-- end Category-info -->
+		<?php endif; ?>
 	</header><!-- end Header -->
 
 	<div class="sb-slidebar sb-left Slidebar">
@@ -98,10 +116,10 @@
 		</h1><!-- end Header-logo -->
 		<?php
 			$args = array(
-				'theme_location' => 'main-menu',
-				'container' => 'nav',
+				'theme_location'  => 'main-menu',
+				'container'       => 'nav',
 				'container_class' => 'Header-mainMenu',
-				'menu_class' => 'MainMenu'
+				'menu_class'      => 'MainMenu'
 			);
 			wp_nav_menu($args);
 		?>

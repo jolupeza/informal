@@ -441,8 +441,42 @@ class Informal_Manager_Admin
         $user_contact['facebook'] = __( 'Facebook Uername' , THEMEDOMAIN  );
         $user_contact['twitter']  = __( 'Twitter Username', THEMEDOMAIN );
         $user_contact['youtube']  = __( 'Youtube Username', THEMEDOMAIN );
+        $user_contact['blog']     = __( 'Blog', THEMEDOMAIN );
 
         return $user_contact;
+    }
+
+    public function remove_pages_wp_search($query)
+    {
+        if($query->is_search() && $query->is_main_query()) {
+            $query->set('post_type', 'post');
+        }
+    }
+
+    private function wpb_set_post_views($postID)
+    {
+        $countKey = 'wpb_post_views_count';
+        $count = get_post_meta($postID, $countKey, true);
+
+        if($count == '') {
+            $count = 0;
+            delete_post_meta($postID, $countKey);
+            add_post_meta($postID, $countKey, '0');
+        } else {
+            $count++;
+            update_post_meta($postID, $countKey, $count);
+        }
+    }
+
+    public function wpb_track_post_views($postID)
+    {
+        if(!is_single()) return;
+        if(empty($postID)) {
+            global $post;
+            $postID = $post->ID;
+        }
+
+        $this->wpb_set_post_views($postID);
     }
 
     /**

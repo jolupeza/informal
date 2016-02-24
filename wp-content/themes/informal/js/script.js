@@ -91,12 +91,14 @@ var j = jQuery.noConflict();
 		$body.on('click', '#js-readmore-content', function(ev){
 			ev.preventDefault();
 
-			var $this = j(this);
-			var paged = parseInt($this.data('paged'));
-			var author = $this.data('author');
+			var $this    = j(this);
+			var paged    = parseInt($this.data('paged'));
+			var author   = $this.data('author');
 			var category = $this.data('category');
-			var loader = j('.Main-content-loader');
-			var content = j('.Main-content-wrapper');
+			var tag      = $this.data('tag');
+			var search   = $this.data('search');
+			var loader   = j('.Main-content-loader');
+			var content  = j('.Main-content-wrapper');
 
 			if(paged > 0) {
 				loader.removeClass('hidden');
@@ -106,7 +108,9 @@ var j = jQuery.noConflict();
 					action: 'get_posts',
 					paged: paged,
 					author: author,
-					category: category
+					category: category,
+					tag: tag,
+					search: search
 				}, function(data){
 					loader.addClass('hidden');
 					if(data.result) {
@@ -161,5 +165,57 @@ var j = jQuery.noConflict();
 	    		});
 	    	});
 	    }, 5000);
+
+	    $body.on('click', '.CaretMenu', function(ev){
+	    	ev.preventDefault();
+	    	var $this = j(this);
+	    	var menu = j('.Category-info');
+	    	var wrapper = menu.find('.container');
+	    	var id = parseInt($this.data('id'));
+	    	var loader = j('.Category-loader');
+
+	    	if(menu.hasClass('active')) {
+	    		menu.fadeOut('slow').removeClass('active');
+	    		wrapper.html('');
+	    	} else {
+	    		if (id > 0) {
+	    			loader.removeClass('hidden');
+
+		    		j.post(InformalAjax.url, {
+		    			nonce: InformalAjax.nonce,
+		    			action: 'get_menu',
+		    			id: id
+		    		}, function(data){
+						if(data.result) {
+							loader.addClass('hidden');
+							wrapper.append(data.content);
+						}
+	    			}, 'json').fail(function(){
+	    				loader.addClass('hidden');
+	    				alert('No se pudo realizar la operación solicitada. Por favor vuelva a intentarlo.');
+	    			});
+	    		}
+
+	    		menu.fadeIn('slow').addClass('active');
+	    	}
+	    });
+
+	    j('.js-display-search').on('click', function(ev){
+	    	ev.preventDefault();
+	    	var $this = j(this);
+	    	var search = j('.Search');
+	    	var form = j('.Search-form');
+
+	    	if(search.hasClass('active')) {
+	    		search.fadeOut('slow', function() {
+	    			search.removeClass('active');
+	    		});
+	    	} else {
+	    		search.fadeIn('slow', function() {
+	    			form.find('input:first').focus();
+	    			search.addClass('active');
+	    		});
+	    	}
+	    });
 	});
 })(jQuery);

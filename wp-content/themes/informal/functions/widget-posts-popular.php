@@ -65,10 +65,18 @@
 
 			global $wpdb;
 			global $post;
-			$result = $wpdb->get_results("SELECT comment_count, ID, post_title, post_date FROM $wpdb->posts ORDER BY comment_count DESC LIMIT 0, $number");
+			$result = $wpdb->get_results("SELECT ID, post_title FROM $wpdb->posts "
+				." INNER JOIN $wpdb->postmeta ON $wpdb->posts.ID = $wpdb->postmeta.post_id "
+				." WHERE $wpdb->postmeta.meta_key = 'wpb_post_views_count' AND "
+				." $wpdb->posts.post_type = 'post' AND "
+				." $wpdb->posts.post_status = 'publish' "
+				." ORDER BY $wpdb->postmeta.meta_value DESC LIMIT 0, $number");
 
-			foreach ($result as $post) {
-				setup_postdata($post);
+
+			if(count($result)) :
+				foreach ($result as $post) :
+					setup_postdata($post);
+					$id = get_the_ID();
 		?>
 				<article class="PostsPopular">
 					<?php if(has_post_thumbnail()) : ?>
@@ -77,12 +85,14 @@
 						</figure><!-- end PostsPopular-image -->
 					<?php endif; ?>
 					<div class="PostsPopular-info">
-						<h3 class="PostsPopular-title"><a href="<?php echo get_permalink($post->ID); ?>"><?php the_title(); ?></a></h3>
+						<h3 class="PostsPopular-title"><a href="<?php echo get_permalink($id); ?>"><?php the_title(); ?></a></h3>
 						<p class="PostsPopular-time">hace <span><?php echo human_time_diff( get_the_time('U'), current_time('timestamp')); ?></span></p>
 					</div><!-- end PostsPopular-info -->
 				</article><!-- end PostsPopular -->
 		<?php
-			}
+				endforeach;
+			endif;
+
 			wp_reset_postdata();
 			echo $after_widget;
 		}

@@ -2,6 +2,8 @@
 
 	<main class="container Main">
 		<?php
+			$thisCat = get_category(get_query_var('cat'));
+
 			$currentCat = get_cat_id(single_cat_title("", false));
 			$catMeta = get_option("category_" . $currentCat);
 			$color = (isset($catMeta['mb_colour']) && !empty($catMeta['mb_colour'])) ? esc_attr($catMeta['mb_colour']) : '';
@@ -10,14 +12,16 @@
 		<!-- Etiquetas -->
 		<aside class="Main-tags hidden-xs hidden-sm">
 			<?php
-				$categories = get_categories(array('parent' => $currentCat, 'orderby' => 'count', 'order' => 'DESC', 'number' => 8));
+				$categories = get_categories(array('parent' => (!$thisCat->category_parent) ? $currentCat : $thisCat->category_parent, 'orderby' => 'count', 'order' => 'DESC'));
 				if(count($categories)) {
 			?>
 				<ul class="Main-tags-list list-inline">
-					<li class="Main-tags-item Main-tags-item--first Main-tags-item--<?php echo $color; ?> text-uppercase">Categorías</li>
+					<li class="Main-tags-item Main-tags-item--first text-uppercase">Categorías</li>
 					<?php foreach($categories as $category) : ?>
 						<?php $category_link = get_category_link($category->term_id); ?>
-						<li class="Main-tags-item text-uppercase"><a href="<?php echo esc_url($category_link); ?>" title="<?php echo $category->name; ?>"><?php echo $category->name; ?></a></li>
+						<li class="Main-tags-item text-uppercase">
+							<a href="<?php echo esc_url($category_link); ?>" title="<?php echo $category->name; ?>" style="color: <?php echo $color; ?>"><?php echo $category->name; ?></a>
+						</li>
 					<?php endforeach; ?>
 				</ul>
 			<?php
@@ -93,7 +97,7 @@
 					<div class="Main-content-loader text-center hidden"><img src="<?php echo IMAGES; ?>/loading.gif" /></div>
 
 					<div class="Main-content-readmore">
-						<p class="text-center"><a href="" id="js-readmore-content" data-paged="1" data-author="0" data-category="<?php echo $currentCat; ?>">Ver más</a></p>
+						<p class="text-center"><a href="" id="js-readmore-content" data-paged="1" data-author="0" data-category="<?php echo $currentCat; ?>" data-search="0" data-tag="0">Ver más</a></p>
 					</div><!-- end Main-content-readmore -->
 			<?php endif; ?>
 		</section><!-- end Main-content -->

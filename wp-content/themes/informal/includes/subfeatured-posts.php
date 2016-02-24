@@ -17,6 +17,9 @@
 	<?php while($the_query->have_posts()) : $the_query->the_post(); ?>
 		<?php $item = ($i === 0) ? 'first' : 'second'; ?>
 		<?php $first = ($i === 0) ? true : false; ?>
+
+		<?php $format = (!empty(get_post_format())) ? get_post_format() : 'standar'; ?>
+
 			<article class="Main-subfeatured-item Main-subfeatured-item--<?php echo $item; ?>">
 				<?php if(has_post_thumbnail()) : ?>
 					<figure class="Main-subfeatured-image">
@@ -27,12 +30,14 @@
 							$color = (isset($catMeta['mb_colour']) && !empty($catMeta['mb_colour'])) ? esc_attr($catMeta['mb_colour']) : '';
 						?>
 						<aside class="Main-subfeatured-category">
+							<!-- <span class="Format Format-<?php echo $format; ?>">&nbsp;</span> -->
 							<a href="<?php echo get_category_link($categories[0]->cat_ID); ?>" style="background-color: <?php echo $color; ?>"><?php echo $categories[0]->name; ?></a>
 						</aside>
 					</figure><!-- end Main-subfeatured-image -->
 					<div class="Main-subfeatured-info">
 						<?php if(!$first) : ?>
 							<aside class="Main-subfeatured-category">
+								<!-- <span class="Format Format-<?php echo $format; ?>">&nbsp;</span> -->
 								<a href="<?php echo get_category_link($categories[0]->cat_ID); ?>" style="background-color: <?php echo $color; ?>"><?php echo $categories[0]->name; ?></a>
 							</aside>
 						<?php endif; ?>

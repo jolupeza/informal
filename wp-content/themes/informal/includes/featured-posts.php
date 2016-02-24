@@ -26,7 +26,10 @@
 ?>
 			<section class="Main-featured">
 				<?php while($the_query->have_posts()) : $the_query->the_post(); ?>
-					<?php $item = ($i === 0) ? 'first' : 'second'; ?>
+					<?php
+						$item = ($i === 0) ? 'first' : 'second';
+						$format = (!empty(get_post_format())) ? get_post_format() : 'standar';
+					?>
 					<figure class="Main-featured-item Main-featured-item--<?php echo $item; ?>">
 						<?php if (has_post_thumbnail()) : ?>
 							<?php the_post_thumbnail('full', array('class' => 'img-responsive')); ?>
@@ -38,6 +41,7 @@
 								$color = (isset($catMeta['mb_colour']) && !empty($catMeta['mb_colour'])) ? esc_attr($catMeta['mb_colour']) : '';
 							?>
 							<aside class="Main-featured-category">
+								<span class="Format Format-<?php echo $format; ?>">&nbsp;</span>
 								<a href="<?php echo get_category_link($categories[0]->cat_ID); ?>" style="background-color: <?php echo $color; ?>"><?php echo $categories[0]->name; ?></a>
 							</aside>
 							<h2 class="Main-featured-title"><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h2>

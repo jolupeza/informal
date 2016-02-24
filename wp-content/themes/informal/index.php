@@ -151,7 +151,7 @@
 					<div class="Main-content-loader text-center hidden"><img src="<?php echo IMAGES; ?>/loading.gif" /></div>
 
 					<div class="Main-content-readmore">
-						<p class="text-center"><a href="" id="js-readmore-content" data-paged="1" data-author="0" data-category="0">Ver más</a></p>
+						<p class="text-center"><a href="" id="js-readmore-content" data-paged="1" data-author="0" data-category="0" data-search="0" data-tag="0">Ver más</a></p>
 					</div><!-- end Main-content-readmore -->
 			<?php endif; ?>
 		</section><!-- end Main-content -->

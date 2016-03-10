@@ -13,6 +13,8 @@ var paths = {
 		// 'public/libraries/bootstrap/dist/css/bootstrap.min.css',
 		// 'public/libraries/formvalidation/dist/css/formValidation.min.css',
 		// 'public/libraries/Slidebars/dist/slidebars.min.css',
+		// 'public/libraries/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css',
+		// 'public/libraries/malihu-custom-scrollbar/jquery.jquery.mCustomScrollbar.min.css',
 		'wp-content/themes/informal/css/style.css'
 	],
 	js: [
@@ -21,6 +23,10 @@ var paths = {
 		'public/libraries/formvalidation/dist/js/framework/bootstrap.js',
 		'public/libraries/formvalidation/dist/js/language/es_ES.js',
 		'public/libraries/Slidebars/dist/slidebars.js',
+		'public/libraries/moment/min/moment-with-locales.min.js',
+		'public/libraries/moment/locale/es.js',
+		'public/libraries/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js',
+		'public/libraries/malihu-custom-scrollbar/jquery.mCustomScrollbar.concat.min.js',
 		'wp-content/themes/informal/js/script.js'
 	],
 	jshint: ['wp-content/themes/informal/js/script.js']

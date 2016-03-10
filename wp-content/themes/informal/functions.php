@@ -105,6 +105,17 @@ if (function_exists('register_sidebar')) {
     );
     register_sidebar(
         array(
+            'name' => __('Home Page Calendar', THEMEDOMAIN),
+            'id' => 'calendar-home',
+            'description' => __('Sidebar calendar homepage', THEMEDOMAIN),
+            'before_widget' => '<div class="SidebarWidget">',
+            'after_widget' => '</div> <!-- end SidebarWidget -->',
+            'before_title' => '<h4>',
+            'after_title' => '</h4>'
+        )
+    );
+    register_sidebar(
+        array(
             'name' => __('Home Page Center Sidebar', THEMEDOMAIN),
             'id' => 'center-home',
             'description' => __('Sidebar central homepage', THEMEDOMAIN),
@@ -379,6 +390,117 @@ function get_menu_callback()
     die();
 }
 
+/***********************************************************/
+/* Get posts via ajax */
+/***********************************************************/
+add_action('wp_ajax_get_events', 'get_events_callback');
+add_action('wp_ajax_nopriv_get_events', 'get_events_callback');
+
+function get_events_callback()
+{
+    $nonce = $_POST['nonce'];
+    $result = array('result' => false);
+
+    if (!wp_verify_nonce($nonce, 'informalajax-nonce')) {
+        die('¡Acceso denegado!');
+    }
+
+    $date = getdate();
+    $dates = array();
+
+    $date = $_POST['date'];
+
+    $args = array(
+        'cat'            => 31,
+        'post_type'      => 'post',
+        'posts_per_page' => -1,
+        'meta_query'     => array(
+            array(
+                'key'     => 'mb_date',
+                'value'   => array(date('Y-m-01', strtotime($date)), date('Y-m-t', strtotime($date))),
+                'type'    => 'DATE',
+                'compare' => 'BETWEEN'
+            )
+        )
+    );
+    $the_query = new WP_Query($args);
+
+    if($the_query->have_posts()) {
+        while($the_query->have_posts()) {
+            $the_query->the_post();
+            $id = get_the_id();
+            $values = get_post_custom($id);
+            $dateEvent = (isset($values['mb_date'])) ? esc_attr($values['mb_date'][0]) : '';
+
+            $dates[] = $dateEvent;
+        }
+    }
+
+    if(count($dates)) {
+        $result['result'] = true;
+        $result['dates'] = $dates;
+    }
+
+    wp_reset_postdata();
+    echo json_encode($result);
+    die();
+}
+
+/***********************************************************/
+/* Get posts via ajax */
+/***********************************************************/
+add_action('wp_ajax_update_events', 'update_events_callback');
+add_action('wp_ajax_nopriv_update_events', 'update_events_callback');
+
+function update_events_callback()
+{
+    $nonce = $_POST['nonce'];
+    $result = array('result' => false);
+
+    if (!wp_verify_nonce($nonce, 'informalajax-nonce')) {
+        die('¡Acceso denegado!');
+    }
+
+    $date     = $_POST['date'];
+    $category = $_POST['category'];
+
+    $args = array(
+        'cat'            => $category,
+        'post_type'      => 'post',
+        'posts_per_page' => -1,
+        'meta_key'       => 'mb_date',
+        'meta_type'      => 'DATE',
+        'meta_query'     => array(
+            array(
+                'key'     => 'mb_date',
+                'value'   => array(date('Y-m-01', strtotime($date)), date('Y-m-t', strtotime($date))),
+                'type'    => 'DATE',
+                'compare' => 'BETWEEN'
+            )
+        ),
+        'order'          => 'ASC',
+        'orderby'        => 'meta_value_date',
+    );
+    $the_query = new WP_Query($args);
+
+    if($the_query->have_posts()) {
+        ob_start();
+
+        include TEMPLATEPATH . '/includes/events.php';
+
+        $content = ob_get_contents();
+
+        ob_get_clean();
+
+        $result['result'] = true;
+        $result['content'] = $content;
+    }
+
+    wp_reset_postdata();
+    echo json_encode($result);
+    die();
+}
+
 /***********************************************************************************************/
 /* Custom Function for Displaying Comments */
 /***********************************************************************************************/
@@ -500,6 +622,7 @@ require_once('functions/widget-fb-page.php');
 require_once('functions/widget-publicidadgoogle-300.php');
 require_once('functions/widget-banner-300.php');
 require_once('functions/widget-posts-popular.php');
+require_once('functions/widget-events-calendar.php');
 
 /*
  * Dump helper. Functions to dump variables to the screen, in a nicley formatted manner.

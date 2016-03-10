@@ -1,6 +1,8 @@
 @import "../../../../public/libraries/bootstrap/dist/css/bootstrap.min.css"
 @import "../../../../public/libraries/formvalidation/dist/css/formValidation.min.css"
 @import "../../../../public/libraries/Slidebars/dist/slidebars.min.css"
+@import "../../../../public/libraries/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css"
+@import "../../../../public/libraries/malihu-custom-scrollbar/jquery.mCustomScrollbar.min.css"
 
 @import "compass/css3"
 
@@ -1253,5 +1255,134 @@ body
 	font-weight: bold
 	a
 		color: #2e2a2a
+
+/* -----------------------------*\
+    	$WIDGETCALENDAR
+/*------------------------------*/
+.WidgetCalendar
+	background-color: #331669
+	padding: 15px 20px
+	&.Calendar-horizontal
+		display: table
+		table-layout: fixed
+		width: 100%
+		.Calendar
+			display: table-cell
+			width: 35%
+		.WidgetCalendar-events
+			display: table-cell
+			padding-left: 15px
+			width: 50%
+.Calendar
+	margin-bottom: 10px
+	overflow: hidden
+.bootstrap-datetimepicker-widget
+	table
+		th
+			color: white
+			font-family: 'Source Sans Pro', sans-serif
+			font-weight: 700
+			text-transform: uppercase
+			&.picker-switch
+				font-size: 1.3em
+				font-style: italic
+		thead
+			tr
+				&:first-child
+					th
+						&:hover
+							background-color: rgba(white, 0.2)
+							color: white
+		td
+			&.day
+				background-color: #f30632
+				+border-radius(0)
+				color: white
+				font-family: "Roboto"
+				padding: 8px 5px
+				&.disabled
+					background-color: rgba(white, 0.2)
+				&:not(.disabled)
+					&:hover
+						background-color: #f30632
+						color: white
+						cursor: default
+			span.month, span.year
+				color: white
+				&:hover
+					background-color: rgba(white, 0.2)
+					color: white
+.WidgetCalendar-events
+	overflow: hidden
+	position: relative
+	h5
+		border-bottom: 1px solid rgba(white, 0.2)
+		color: white
+		font-family: "Roboto"
+		font-size: 1.5em
+		font-weight: 700
+		text-transform: uppercase
+.WidgetCalendar-wrapper
+	min-height: 100px
+	max-height: 320px
+	position: relative
+	.mCSB_container
+		margin-right: 0
+.WidgetCalendar-event
+	background-color: #2a1256
+	overflow: hidden
+	padding: 10px
+	&:nth-child(2n)
+		background-color: rgba(white, 0)
+	h6
+		color: white
+		font-family: "Roboto"
+		font-size: 1.125em
+		font-weight: 700
+		margin-top: 0
+.WidgetCalendar-event-day
+	background-color: #f30632
+	+border-radius(3px)
+	display: inline-block
+	margin-right: 10px
+	padding: 5px 0
+	text-align: center
+	vertical-align: top
+	width: 50px
+.WidgetCalendar-dayWeek, .WidgetCalendar-day
+	color: white
+	display: block
+	font-family: 'Source Sans Pro', sans-serif
+	font-weight: 700
+	line-height: 1.1em
+	text-align: center
+.WidgetCalendar-dayWeek
+	font-size: 0.75em
+.WidgetCalendar-day
+	font-size: 1.25em
+.WidgetCalendar-event-info
+	display: inline-block
+	vertical-align: top
+	width: 75%
+	h6
+		font-family: "Roboto"
+		font-size: 1.125em
+		font-weight: 700
+		margin-top: 0
+		a
+			color: white
+	p
+		color: white
+		font-family: "Roboto"
+		font-size: 0.875em
+		font-weight: 300
+#js-loading-events
+	position: absolute
+	top: 80px
+	width: 100%
+	z-index: 9
+
+
+
 
 

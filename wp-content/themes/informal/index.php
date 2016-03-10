@@ -33,7 +33,7 @@
 				<?php include(TEMPLATEPATH . '/includes/subfeatured-posts.php'); ?>
 			</div><!-- end col-md-5 -->
 			<div class="col-md-7">
-				<!-- Aquí irá el calendario -->
+				<?php get_sidebar('calendar-home'); ?>
 
 				<aside class="Sidebar-advertising hidden-xs hidden-sm">
 					<?php get_sidebar('center-home'); ?>

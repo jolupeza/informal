@@ -15,6 +15,7 @@
 		$values = get_post_custom( get_the_ID() );
     	$subfeatured = isset( $values['mb_subfeatured'] ) ? esc_attr( $values['mb_subfeatured'][0] ) : '';
     	$featured = isset( $values['mb_featured'] ) ? esc_attr( $values['mb_featured'][0] ) : '';
+		$date = isset( $values['mb_date'] ) ? esc_attr( $values['mb_date'][0] ): '';
 
 		wp_nonce_field( 'post_meta_box_nonce', 'meta_box_nonce' );
 	?>
@@ -27,5 +28,10 @@
 	<p class="content-mb">
 		<label for="mb_subfeatured">Subdestacado:</label>
 		<input type="checkbox" name="mb_subfeatured" id="mb_subfeatured" <?php checked($subfeatured, 'on'); ?> />
+	</p>
+
+	<p class="content-mb">
+		<label for="mb_date">Fecha del evento:</label>
+	    <input type="date" name="mb_date" id="mb_date" value="<?php echo $date; ?>" />
 	</p>
 </div><!-- #single-post-meta-manager -->

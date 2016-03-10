@@ -70,7 +70,7 @@
 				." WHERE $wpdb->postmeta.meta_key = 'wpb_post_views_count' AND "
 				." $wpdb->posts.post_type = 'post' AND "
 				." $wpdb->posts.post_status = 'publish' "
-				." ORDER BY $wpdb->postmeta.meta_value DESC LIMIT 0, $number");
+				." ORDER BY CONVERT($wpdb->postmeta.meta_value, UNSIGNED) DESC LIMIT 0, $number");
 
 
 			if(count($result)) :
@@ -86,7 +86,7 @@
 					<?php endif; ?>
 					<div class="PostsPopular-info">
 						<h3 class="PostsPopular-title"><a href="<?php echo get_permalink($id); ?>"><?php the_title(); ?></a></h3>
-						<p class="PostsPopular-time">hace <span><?php echo human_time_diff( get_the_time('U'), current_time('timestamp')); ?></span></p>
+						<p class="PostsPopular-time">hace <span><?php echo human_time_diff( get_the_time('U', $id), current_time('timestamp')); ?></span></p>
 					</div><!-- end PostsPopular-info -->
 				</article><!-- end PostsPopular -->
 		<?php

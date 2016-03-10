@@ -1,9 +1,11 @@
 var j = jQuery.noConflict();
 
 (function($){
-	var $body = j('body'),
+	var $body   = j('body'),
 		$footer = j('.Footer'),
-	    $window = j(window);
+		$window = j(window);
+	var monthsAbr = ['ene.', 'feb.', 'mar.', 'abr.', 'may.', 'jun.', 'jul.', 'ago.', 'sep.', 'oct.', 'nov.', 'dic.'];
+	var months    = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'];
 
 	$window.scroll(function(event){
 		if($window.scrollTop() > 150) {
@@ -217,5 +219,139 @@ var j = jQuery.noConflict();
 	    		});
 	    	}
 	    });
+
+	    j('#js-dtp-events').datetimepicker({
+	        inline: true,
+	        useCurrent: false,
+	        format: 'DD/MM/YYYY'
+	    });
+
+		setDates(moment().format('YYYY-MM-DD'));
+
+	    function setDates(date)
+	    {
+	    	j.post(InformalAjax.url, {
+				nonce: InformalAjax.nonce,
+				action: 'get_events',
+				date: date
+	    	}, function(data) {
+	    		if(data.result) {
+	    			var dates = data.dates;
+	    			var numDates = [];
+
+	    			j.each(dates, function(index, val) {
+	    				numDates.push(moment(val));
+	    			});
+
+					j("#js-dtp-events").data('DateTimePicker').enabledDates(numDates);
+	    		}
+	    	}, 'json').fail(function(){
+				alert('No se pudo realizar la operación solicitada. Por favor vuelva a intentarlo.');
+			});
+	    }
+
+	    j('.WidgetCalendar-wrapper').mCustomScrollbar({
+	    	axis: "y",
+	    	live: "true"
+	    });
+
+	    j('.next').on('click', function(ev){
+	    	var $this = j(this);
+
+	    	updateCalendar($this, 'next');
+	    });
+
+	    j('.prev').on('click', function(ev){
+	    	var $this = j(this);
+
+	    	updateCalendar($this, 'prev');
+	    });
+
+	    j('.month').on('click', function(ev){
+	    	var $this = j(this);
+	    	var wrapper = j('.datepicker-months');
+
+	    	if(wrapper.css('display') == 'block') {
+		    	updateCalendar($this, '');
+	    	}
+	    });
+
+	    function updateCalendar($this, event)
+	    {
+	    	var month, year, nowDate, nextMonth, newDate;
+	    	var content = j('.WidgetCalendar-wrapper .mCSB_container');
+	    	var category = j('.WidgetCalendar-wrapper').data('category');
+	    	var loader = j('#js-loading-events');
+
+			loader.removeClass('hidden');
+			j('.WidgetCalendar-wrapper').addClass('loader');
+
+			if(event.length === 0) {
+				var wrapper = j('.datepicker-months');
+	    		month = $this.text();
+		    	month = monthsAbr.indexOf(month) + 1;
+		    	month = month.toString();
+
+		    	if(month.length === 1) {
+		    		nextMonth = '0' + month;
+		    	}
+
+		    	year = wrapper.find('.picker-switch').text();
+			} else {
+		    	if(event === 'next') {
+					nowDate = $this.prev('.picker-switch').text();
+		    	} else if(event === 'prev') {
+		    		nowDate = $this.next('.picker-switch').text();
+		    	}
+
+				month = nowDate.split(' ')[0];
+				year  = nowDate.split(' ')[1];
+
+		    	if(event === 'next') {
+		    		if(month === 'diciembre') {
+		    			nextMonth = 1;
+		    			year++;
+		    		} else {
+		    			nextMonth = months.indexOf(month) + 2;
+		    		}
+		    	} else if(event === 'prev') {
+		    		if(month === 'enero') {
+		    			nextMonth = 12;
+		    			year--;
+		    		} else {
+		    			nextMonth = months.indexOf(month);
+		    		}
+		    	}
+		    	nextMonth = nextMonth.toString();
+
+		    	if(nextMonth.length === 1) {
+		    		nextMonth = '0' + nextMonth;
+		    	}
+			}
+
+	    	newDate = year + '-' + nextMonth + '-01';
+	    	setDates(newDate);
+
+	    	j.post(InformalAjax.url, {
+				nonce: InformalAjax.nonce,
+				action: 'update_events',
+				date: newDate,
+				category: category,
+			}, function(data){
+				loader.addClass('hidden');
+				content.html('');
+
+				if(data.result) {
+					content.html(data.content);
+				} else {
+					var html = '<div class="WidgetCalendar-event"><h6 class="text-center">No se encontraron eventos para esta fecha</h6></div><!-- end WidgetCalendar-event -->';
+					content.html(html);
+				}
+				j('.WidgetCalendar-wrapper').removeClass('loader');
+
+			}, 'json').fail(function(){
+				alert('No se pudo realizar la operación solicitada. Por favor vuelva a intentarlo.');
+			});
+	    }
 	});
 })(jQuery);

@@ -47,7 +47,7 @@ add_action('init', 'register_my_menus');
 /***********************************************************/
 class Informal_menu_main_walker extends Walker_Nav_Menu
 {
-    public function start_el ( &$output, $item, $depth = 0, $args = array(), $id = 0 )
+    public function start_el( &$output, $item, $depth = 0, $args = array(), $id = 0 )
     {
         $indent = ( $depth ) ? str_repeat( "\t", $depth ) : '';
         $class_names = '';
@@ -74,18 +74,52 @@ class Informal_menu_main_walker extends Walker_Nav_Menu
         $item_output .= $args->link_before . $content . $args->link_after;
         $item_output .= '</a>';
 
-        if ('category' == $item->object) {
-            /*$idCategory = $item->object_id;
-            $catMeta = get_option("category_" . $idCategory);
-            $color = (isset($catMeta['mb_colour']) && !empty($catMeta['mb_colour'])) ? esc_attr($catMeta['mb_colour']) : '';*/
+        if('category' == $item->object) {
+            $item_output .= '<span class="glyphicon glyphicon-menu-down" aria-hidden="true"></span>';
+        }
 
-            $item_output .= ' <span class="caret CaretMenu" data-id="' . $item->object_id . '"></span>';
+        if ('category' == $item->object) {
+            $idCategory = $item->object_id;
+
+            $child_cats = wp_list_categories('title_li=&echo=0&hide_empty=0&child_of='.$item->object_id);
+            if( $child_cats ){
+                $item_output .= '<div class="MainMenu-subMenu">';
+                $item_output .= '<ul class="sub-menu">' .$child_cats. '</ul>';
+                $item_output .= '<div class="MainMenu-lastPost text-center">';
+                $item_output .= '<div class="row">';
+                $item_output .= getLastPostCategory($idCategory);
+                $item_output .= '</div>';
+                $item_output .= '</div>';
+                $item_output .= '</div>';
+            }
         }
 
         $item_output .= $args->after;
 
         $output .= apply_filters( 'walker_nav_menu_start_el', $item_output, $item, $depth, $args );
     }
+}
+
+function getLastPostCategory($id) {
+    $content = '';
+
+    $args = array(
+        'cat'            => $id,
+        'posts_per_page' => 4
+    );
+    $the_query = new WP_Query($args);
+    if($the_query->have_posts()) {
+        ob_start();
+
+        include TEMPLATEPATH . '/includes/lastPosts.php';
+
+        $content = ob_get_contents();
+
+        ob_get_clean();
+    }
+
+    wp_reset_postdata();
+    return $content;
 }
 
 /***********************************************************************************************/
@@ -350,49 +384,6 @@ function get_posts_callback()
 /***********************************************************/
 /* Get posts via ajax */
 /***********************************************************/
-add_action('wp_ajax_get_menu', 'get_menu_callback');
-add_action('wp_ajax_nopriv_get_menu', 'get_menu_callback');
-
-function get_menu_callback()
-{
-    $nonce = $_POST['nonce'];
-    $result = array('result' => false);
-
-    if (!wp_verify_nonce($nonce, 'informalajax-nonce')) {
-        die('¡Acceso denegado!');
-    }
-
-    $id    = (int)$_POST['id'];
-
-    if ($id > 0) {
-        $currentCat = get_category($id);
-
-        $catMeta = get_option("category_" . $currentCat->cat_ID);
-        $color = (isset($catMeta['mb_colour']) && !empty($catMeta['mb_colour'])) ? esc_attr($catMeta['mb_colour']) : '';
-        $categories = get_categories(array('parent' => $currentCat->cat_ID, 'orderby' => 'count', 'order' => 'DESC'));
-
-        if(count($categories)) {
-            ob_start();
-
-            include TEMPLATEPATH . '/includes/menu-category.php';
-
-            $content = ob_get_contents();
-
-            ob_get_clean();
-
-            $result['result'] = true;
-            $result['content'] = $content;
-        }
-    }
-
-    wp_reset_postdata();
-    echo json_encode($result);
-    die();
-}
-
-/***********************************************************/
-/* Get posts via ajax */
-/***********************************************************/
 add_action('wp_ajax_get_events', 'get_events_callback');
 add_action('wp_ajax_nopriv_get_events', 'get_events_callback');
 
@@ -409,20 +400,39 @@ function get_events_callback()
     $dates = array();
 
     $date = $_POST['date'];
+    $category = (int)$_POST['category'];
+    $filter = (int)$_POST['filter'];
 
     $args = array(
-        'cat'            => 31,
+        'cat'            => $category,
         'post_type'      => 'post',
         'posts_per_page' => -1,
-        'meta_query'     => array(
+    );
+    if($filter === 1 || $filter === 2) {
+        $meta = ($filter === 1) ? 'mb_ev_featured' : 'mb_ev_weekend';
+        $args['meta_query'] = array(
+            array(
+                'key'     => 'mb_date',
+                'value'   => array(date('Y-m-01', strtotime($date)), date('Y-m-t', strtotime($date))),
+                'type'    => 'DATE',
+                'compare' => 'BETWEEN'
+            ),
+            array(
+                'key'     => $meta,
+                'value'   => 'on',
+            )
+        );
+    } else {
+        $args['meta_query'] = array(
             array(
                 'key'     => 'mb_date',
                 'value'   => array(date('Y-m-01', strtotime($date)), date('Y-m-t', strtotime($date))),
                 'type'    => 'DATE',
                 'compare' => 'BETWEEN'
             )
-        )
-    );
+        );
+    }
+
     $the_query = new WP_Query($args);
 
     if($the_query->have_posts()) {
@@ -447,7 +457,7 @@ function get_events_callback()
 }
 
 /***********************************************************/
-/* Get posts via ajax */
+/* Get events via ajax */
 /***********************************************************/
 add_action('wp_ajax_update_events', 'update_events_callback');
 add_action('wp_ajax_nopriv_update_events', 'update_events_callback');
@@ -478,7 +488,7 @@ function update_events_callback()
                 'compare' => 'BETWEEN'
             )
         ),
-        'order'          => 'ASC',
+        'order'          => 'DESC',
         'orderby'        => 'meta_value_date',
     );
     $the_query = new WP_Query($args);
@@ -497,6 +507,71 @@ function update_events_callback()
     }
 
     wp_reset_postdata();
+    echo json_encode($result);
+    die();
+}
+
+/***********************************************************/
+/* Get events via ajax */
+/***********************************************************/
+add_action('wp_ajax_filter_events', 'filter_events_callback');
+add_action('wp_ajax_nopriv_filter_events', 'filter_events_callback');
+
+function filter_events_callback()
+{
+    $nonce = $_POST['nonce'];
+    $result = array('result' => false);
+
+    if (!wp_verify_nonce($nonce, 'informalajax-nonce')) {
+        die('¡Acceso denegado!');
+    }
+
+    $filter = (int)$_POST['filter'];
+    $category = $_POST['category'];
+    $date     = $_POST['date'];
+
+    if($filter === 1 || $filter === 2) {
+        $meta = ($filter === 1) ? 'mb_ev_featured' : 'mb_ev_weekend';
+
+        $args = array(
+            'cat'            => $category,
+            'post_type'      => 'post',
+            'posts_per_page' => -1,
+            'meta_key'       => 'mb_date',
+            'meta_type'      => 'DATE',
+            'meta_query'     => array(
+                array(
+                    'key'     => 'mb_date',
+                    'value'   => array(date('Y-m-01', strtotime($date)), date('Y-m-t', strtotime($date))),
+                    'type'    => 'DATE',
+                    'compare' => 'BETWEEN'
+                ),
+                array(
+                    'key'     => $meta,
+                    'value'   => 'on',
+                )
+            ),
+            'order'          => 'DESC',
+            'orderby'        => 'meta_value_date',
+        );
+        $the_query = new WP_Query($args);
+
+        if($the_query->have_posts()) {
+            ob_start();
+
+            include TEMPLATEPATH . '/includes/events.php';
+
+            $content = ob_get_contents();
+
+            ob_get_clean();
+
+            $result['result'] = true;
+            $result['content'] = $content;
+        }
+
+        wp_reset_postdata();
+    }
+
     echo json_encode($result);
     die();
 }

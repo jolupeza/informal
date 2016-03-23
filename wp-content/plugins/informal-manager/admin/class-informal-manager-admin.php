@@ -152,6 +152,14 @@ class Informal_Manager_Admin {
         } else {
             delete_post_meta($post_id, 'mb_date');
         }
+        
+        // Save meta custom mb_ev_featured
+        $ev_featured = isset($_POST['mb_ev_featured']) && $_POST['mb_ev_featured'] ? 'on' : 'off';
+        update_post_meta($post_id, 'mb_ev_featured', $ev_featured);
+        
+        // Save meta custom mb_ev_weekend
+        $ev_weekend = isset($_POST['mb_ev_weekend']) && $_POST['mb_ev_weekend'] ? 'on' : 'off';
+        update_post_meta($post_id, 'mb_ev_weekend', $ev_weekend);
     }
 
     /**

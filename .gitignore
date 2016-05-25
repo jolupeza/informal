@@ -39,3 +39,10 @@ wp-settings.php
 wp-signup.php
 wp-trackback.php
 xmlrpc.php
+
+public/libraries/Slidebars/
+public/libraries/bootstrap/
+public/libraries/jquery/
+public/libraries/eonasdan-bootstrap-datetimepicker/
+public/libraries/moment/
+public/libraries/moment-timezone/

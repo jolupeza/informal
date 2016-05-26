@@ -214,6 +214,11 @@ var j = jQuery.noConflict();
 	    			});
 
 					j("#js-dtp-events").data('DateTimePicker').enabledDates(numDates);
+	    		} else {
+	    			j('td.day').addClass('disabled');
+	    			var content = j('.WidgetCalendar-wrapper .mCSB_container');
+    				var html = '<div class="WidgetCalendar-event"><h6 class="text-center">No se encontraron eventos para esta fecha</h6></div><!-- end WidgetCalendar-event -->';
+    				content.html(html);
 	    		}
 	    	}, 'json').fail(function(){
 				alert('No se pudo realizar la operación solicitada. Por favor vuelva a intentarlo.');

@@ -1,3 +1,5 @@
+# Use PHP5.6 Single php.ini as default
+# AddHandler application/x-httpd-phpbetas .php
 
 # BEGIN WordPress
 <IfModule mod_rewrite.c>

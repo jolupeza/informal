@@ -123,7 +123,6 @@ class Informal_Events_Calendar_Widget extends WP_Widget
             );
             $the_query = new WP_Query($args);
 
-            if($the_query->have_posts()) {
                 echo '<div class="WidgetCalendar-events">';
                 echo '<h5>' . $thisCat->name . '</h5>';
 ?>
@@ -139,6 +138,7 @@ class Informal_Events_Calendar_Widget extends WP_Widget
 
                 echo '<div class="WidgetCalendar-wrapper" data-category="' . $category . '">';
 
+            if($the_query->have_posts()) {
                 while($the_query->have_posts()) {
                     $the_query->the_post();
                     $id = get_the_id();
@@ -160,9 +160,9 @@ class Informal_Events_Calendar_Widget extends WP_Widget
 <?php
                     endif;
                 }
-                    echo '</div>';
-                    echo '</div>';
             }
+                    echo '</div>';
+                    echo '</div>';
 
             wp_reset_postdata();
             echo '</aside><!-- end WidgetCalendar -->';

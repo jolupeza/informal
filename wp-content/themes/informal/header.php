@@ -17,7 +17,7 @@
 	<link rel="pingback" href="<?php bloginfo('pingback_url'); ?>" />
 
 	<!-- Favicon and Apple Icons -->
-	<link rel="shortcut icon" href="<?php print IMAGES; ?>/favicon.ico">
+	<link rel="shortcut icon" href="<?php print IMAGES; ?>/favicon.png">
 	<!-- <link rel="apple-touch-icon" href="<?php // print IMAGES; ?>/icons/apple-touch-icon.png">
 	<link rel="apple-touch-icon" sizes="72x72" href="<?php // print IMAGES; ?>/icons/apple-touch-icon-72x72.png">
 	<link rel="apple-touch-icon" sizes="114x114" href="<?php // print IMAGES; ?>/icons/apple-touch-icon-114x114.png"> -->
@@ -73,19 +73,7 @@
 						<a href="<?php echo home_url(); ?>" title="<?php bloginfo('name'); ?>"><img class="center-block" src="<?php echo $logo; ?>" alt="<?php bloginfo('name'); ?> | <?php bloginfo('description'); ?>" /></a>
 					</h1>
 				</div>
-				<div class="col-md-6 hidden-xs hidden-sm">
-					<?php
-						$args = array(
-							'theme_location' => 'main-menu',
-							'container' => 'nav',
-							'container_class' => 'Header-mainMenu',
-							'menu_class' => 'MainMenu list-inline',
-							'walker' => new Informal_menu_main_walker()
-						);
-						wp_nav_menu($args);
-					?>
-				</div>
-				<div class="col-md-3 hidden-xs hidden-sm">
+				<div class="col-md-9 hidden-xs hidden-sm">
 					<nav class="Header-social">
 						<ul class="list-inline Header-social-list text-right">
 							<?php if(isset($options['display_social_link']) && $options['display_social_link']) : ?>
@@ -103,7 +91,18 @@
 							<li class="Header-social-item Header-social-item--search js-display-search"><a href="#" class="text-hide">Buscar</a></li>
 						</ul><!-- end Header-social-list -->
 					</nav><!-- end Header-social -->
-				</div>
+
+					<?php
+						$args = array(
+							'theme_location' => 'main-menu',
+							'container' => 'nav',
+							'container_class' => 'Header-mainMenu',
+							'menu_class' => 'MainMenu list-inline',
+							'walker' => new Informal_menu_main_walker()
+						);
+						wp_nav_menu($args);
+					?>
+				</div><!-- end col-md-9 -->
 			</div>
 			<div class="Search">
 				<form method="get" class="Search-form" action="<?php echo home_url(); ?>">

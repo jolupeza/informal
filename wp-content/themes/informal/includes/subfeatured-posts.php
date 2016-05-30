@@ -42,6 +42,7 @@
 							</aside>
 						<?php endif; ?>
 						<h2 class="Main-subfeatured-title"><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h2>
+						<?php if (has_excerpt()) : the_excerpt(); endif; ?>
 						<p class="Main-subfeatured-text">Por <span class="Main-subfeatured-author"><?php the_author_posts_link(); ?></span></p>
 					</div>
 				<?php endif; ?>

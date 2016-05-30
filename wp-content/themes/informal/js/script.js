@@ -193,6 +193,7 @@ var j = jQuery.noConflict();
 	    });
 
 		setDates(moment().format('YYYY-MM-DD'), 31, 0);
+		// setDates(moment().format('YYYY-MM-DD'), 52, 0);
 
 	    function setDates(date, category, filter)
 	    {

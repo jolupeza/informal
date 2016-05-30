@@ -32,7 +32,7 @@
 										</aside>
 
 										<h2 class="Main-content-title"><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h2>
-										<?php the_content('[leer más]'); ?>
+										<?php if (has_excerpt()) : the_excerpt(); endif; ?>
 									</div>
 								</article>
 						<?php endwhile; ?>

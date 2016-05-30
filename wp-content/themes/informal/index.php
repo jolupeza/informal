@@ -27,7 +27,7 @@
 		<!-- Post featured -->
 		<?php include(TEMPLATEPATH . '/includes/featured-posts.php') ?>
 
-		<div class="row">
+		<div class="row Main-center">
 			<div class="col-md-5">
 				<!-- Posts SubFeatured -->
 				<?php include(TEMPLATEPATH . '/includes/subfeatured-posts.php'); ?>
@@ -44,6 +44,8 @@
 				</section><!-- end Main-popular -->
 			</div><!-- end col-md-7 -->
 		</div><!-- end row -->
+
+		<?php /*
 		<div class="row">
 			<?php
 				$categories = get_categories(array('hide_empty' => 0));
@@ -87,6 +89,7 @@
 				</div>
 			<?php endforeach; ?>
 		</div><!-- end row -->
+		*/ ?>
 
 		<section class="Main-content">
 			<div class="Main-content-wrapper">
@@ -132,7 +135,7 @@
 									</aside>
 								<?php endif; ?>
 								<h2 class="Main-content-title"><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h2>
-								<?php the_content('[leer más]'); ?>
+								<?php if (has_excerpt()) : the_excerpt(); endif; ?>
 
 								<?php if($first) : ?>
 									<p class="Main-content-text">Por <span class="Main-content-author"><?php the_author_posts_link(); ?></span></p>

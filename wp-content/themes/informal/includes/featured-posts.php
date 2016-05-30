@@ -45,6 +45,9 @@
 								<a href="<?php echo get_category_link($categories[0]->cat_ID); ?>" style="background-color: <?php echo $color; ?>"><?php echo $categories[0]->name; ?></a>
 							</aside>
 							<h2 class="Main-featured-title"><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h2>
+							<?php if (has_excerpt()) : ?>
+								<div class="slideInUp Main-featured-text"><?php the_excerpt(); ?></div>
+							<?php endif; ?>
 						</article>
 					</figure><!-- end Main-featured-item -->
 					<?php $i++; ?>

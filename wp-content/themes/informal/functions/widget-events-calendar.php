@@ -148,21 +148,21 @@ class Informal_Events_Calendar_Widget extends WP_Widget
                     if(!empty($dateEvent)) :
 ?>
                         <div class="WidgetCalendar-event">
-                                <div class="WidgetCalendar-event-day">
-                                        <span class="WidgetCalendar-dayWeek"><?php echo date_i18n('D', strtotime($dateEvent)); ?></span>
-                                        <span class="WidgetCalendar-day"><?php echo date_i18n('d', strtotime($dateEvent)); ?></span>
-                                </div><!-- end WidgetCalendar-event-day -->
-                                <div class="WidgetCalendar-event-info">
-                                        <h6><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h6>
-                                        <?php the_excerpt(); ?>
-                                </div><!-- end WidgetCalendar-event-info -->
+                            <div class="WidgetCalendar-event-day">
+                                <span class="WidgetCalendar-dayWeek"><?php echo date_i18n('D', strtotime($dateEvent)); ?></span>
+                                <span class="WidgetCalendar-day"><?php echo date_i18n('d', strtotime($dateEvent)); ?></span>
+                            </div><!-- end WidgetCalendar-event-day -->
+                            <div class="WidgetCalendar-event-info">
+                                <h6><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h6>
+                                <?php the_excerpt(); ?>
+                            </div><!-- end WidgetCalendar-event-info -->
                         </div><!-- end WidgetCalendar-event -->
 <?php
                     endif;
                 }
             }
-                    echo '</div>';
-                    echo '</div>';
+                echo '</div>';
+                echo '</div>';
 
             wp_reset_postdata();
             echo '</aside><!-- end WidgetCalendar -->';

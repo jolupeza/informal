@@ -78,7 +78,7 @@
 									</aside>
 								<?php endif; ?>
 								<h2 class="Main-content-title"><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h2>
-								<?php the_content('[leer más]'); ?>
+								<?php if (has_excerpt()) : the_excerpt(); endif; ?>
 
 								<?php if($first) : ?>
 									<p class="Main-content-text">Por <span class="Main-content-author"><?php the_author_posts_link(); ?></span></p>

@@ -62,12 +62,13 @@ body
 	margin-bottom: 15px
 .Header-wrapper
 	// position: relative
-	.col-md-6
+	.col-md-9
 		position: static
 .Header-logo, .Header-social
 	margin-top: 10px
 // .Header-social-list
-// .Header-social-item
+.Header-social-item
+	vertical-align: top
 .Header-social-item--facebook, .Header-social-item--twitter, .Header-social-item--search
 	a
 		background-image: url("../images/sprites.png")
@@ -120,7 +121,7 @@ body
 			MAINMENU
 /* --------------------------- */
 .MainMenu
-	margin-top: 30px
+	margin-top: 10px
 	li
 		margin-right: 10px
 		padding: 0 10px
@@ -147,6 +148,7 @@ body
 			margin-left: 5px
 .MainMenu-subMenu
 	background-color: #FFF
+	border-bottom: 3px solid $main_purple
 	display: none
 	left: 0
 	margin-top: 5px
@@ -275,8 +277,11 @@ body
 	overflow: hidden
 .Main-featured-item
 	position: relative
+	&:last-child
+		border-bottom: none
 .Main-featured-item--first
 	background-color: peru
+	border-right: 1px solid $main_purple
 	display: inline-block
 	float: left
 	width: 66%
@@ -284,6 +289,7 @@ body
 		font-size: 1.875em
 .Main-featured-item--second
 	background-color: purple
+	border-bottom: 1px solid $main_purple
 	display: inline-block
 	float: left
 	max-height: 221px
@@ -310,6 +316,10 @@ body
 		font-size: 0.875em
 		font-weight: 700
 		padding: 5px 15px
+.Main-featured-text
+	p
+		color: white
+		font-family: 'Roboto', sans-serif
 @media only screen and (max-width: 1050px)
 	.Main-featured-item--second
 		max-height: 182px
@@ -378,6 +388,11 @@ body
 	padding: 20px 15px
 	position: relative
 	width: 90%
+	p
+		color: $title_color
+		font-family: "Roboto"
+		font-size: 0.875em
+		font-weight: 300
 .Main-subfeatured-title
 	color: $title_color
 	font-family: "Roboto"
@@ -402,6 +417,8 @@ body
 .Main-content, .Main-sidebar
 	display: inline-block
 	vertical-align: top
+.Main-center
+	margin-bottom: 15px
 .Main-content
 	margin-right: 10px
 	width: 65%
@@ -872,8 +889,10 @@ body
 	padding-top: 25px
 .Slidebar-content
 	background-color: #f4f4f4 !important
-	padding-top: 90px !important
-
+	padding-top: 107px !important
+@media only screen and (max-width: 991px)
+	.Slidebar-content
+		padding-top: 90px !important
 
 /* --------------------------- *\
 			FORMAT
@@ -901,6 +920,7 @@ body
 /* --------------------------- */
 .Search
 	background-color: $main_purple
+	bottom: -20px
 	display: none
 	position: absolute
 	right: 19%
@@ -959,6 +979,7 @@ body
 		right: 2%
 @media only screen and (max-width: 991px)
 	.Search
+		bottom: auto
 		right: 0
 		width: 100%
 	.Search-input
@@ -1445,6 +1466,8 @@ body
 	option
 		color: white
 		text-transform: uppercase
+		background-color: $main_red
+
 
 .select-style
 	background: $main_red url('../images/arrow-select.png') 95% 50% no-repeat
@@ -1466,6 +1489,17 @@ body
 				width: 100%
 			.WidgetCalendar-events
 				padding-left: 0
+
+
++keyframes(slideInUp)
+	from
+		+translate3d(0, 100%, 0)
+		visibility: visible
+	to
+		+translate3d(0, 0, 0)
+
+// .slideInUp
+	// +animation-name(slideInUp)
 
 
 

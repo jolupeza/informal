@@ -34,20 +34,19 @@
 						<?php if (has_post_thumbnail()) : ?>
 							<?php the_post_thumbnail('full', array('class' => 'img-responsive')); ?>
 						<?php endif; ?>
+
+						<?php
+							$categories = get_the_category();
+							$catMeta = get_option("category_" . $categories[0]->cat_ID);
+							$color = (isset($catMeta['mb_colour']) && !empty($catMeta['mb_colour'])) ? esc_attr($catMeta['mb_colour']) : '';
+						?>
+						<aside class="Main-featured-category">
+							<span class="Format Format-<?php echo $format; ?>">&nbsp;</span>
+							<a href="<?php echo get_category_link($categories[0]->cat_ID); ?>" style="background-color: <?php echo $color; ?>"><?php echo $categories[0]->name; ?></a>
+						</aside>
+
 						<article class="Main-featured-info">
-							<?php
-								$categories = get_the_category();
-								$catMeta = get_option("category_" . $categories[0]->cat_ID);
-								$color = (isset($catMeta['mb_colour']) && !empty($catMeta['mb_colour'])) ? esc_attr($catMeta['mb_colour']) : '';
-							?>
-							<aside class="Main-featured-category">
-								<span class="Format Format-<?php echo $format; ?>">&nbsp;</span>
-								<a href="<?php echo get_category_link($categories[0]->cat_ID); ?>" style="background-color: <?php echo $color; ?>"><?php echo $categories[0]->name; ?></a>
-							</aside>
 							<h2 class="Main-featured-title"><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h2>
-							<?php if (has_excerpt()) : ?>
-								<div class="slideInUp Main-featured-text"><?php the_excerpt(); ?></div>
-							<?php endif; ?>
 						</article>
 					</figure><!-- end Main-featured-item -->
 					<?php $i++; ?>

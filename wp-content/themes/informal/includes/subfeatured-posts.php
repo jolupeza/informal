@@ -21,6 +21,10 @@
 		<?php $format = (!empty(get_post_format())) ? get_post_format() : 'standar'; ?>
 
 			<article class="Main-subfeatured-item Main-subfeatured-item--<?php echo $item; ?>">
+				<?php if (!$first) : ?>
+					<h2 class="Main-subfeatured-title"><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h2>
+				<?php endif; ?>
+
 				<?php if(has_post_thumbnail()) : ?>
 					<figure class="Main-subfeatured-image">
 						<?php the_post_thumbnail('full', array('class' => 'img-responsive')); ?>
@@ -35,13 +39,17 @@
 						</aside>
 					</figure><!-- end Main-subfeatured-image -->
 					<div class="Main-subfeatured-info">
-						<?php if(!$first) : ?>
+						<?php /* if(!$first) : ?>
 							<aside class="Main-subfeatured-category">
 								<!-- <span class="Format Format-<?php echo $format; ?>">&nbsp;</span> -->
 								<a href="<?php echo get_category_link($categories[0]->cat_ID); ?>" style="background-color: <?php echo $color; ?>"><?php echo $categories[0]->name; ?></a>
 							</aside>
+						<?php endif; */ ?>
+
+						<?php if ($first) : ?>
+							<h2 class="Main-subfeatured-title"><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h2>
 						<?php endif; ?>
-						<h2 class="Main-subfeatured-title"><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h2>
+
 						<?php if (has_excerpt()) : the_excerpt(); endif; ?>
 						<p class="Main-subfeatured-text">Por <span class="Main-subfeatured-author"><?php the_author_posts_link(); ?></span></p>
 					</div>

@@ -734,3 +734,36 @@ if (!function_exists('dump_exit')) {
 }
 
 
+// Desactivar los errores de la página de Login
+function login_errors_message() {
+  return 'Ooooops!';
+}
+add_filter('login_errors', 'login_errors_message');
+
+// Eliminar basura de la etiqueta <head>
+remove_action('wp_head', 'wp_generator');
+remove_action('wp_head', 'rsd_link');
+remove_action('wp_head', 'wlwmanifest_link');
+remove_action('wp_head', 'index_rel_link');
+remove_action('wp_head', 'parent_post_rel_link', 10, 0);
+remove_action('wp_head', 'start_post_rel_link', 10, 0);
+remove_action('wp_head', 'adjacent_posts_rel_link', 10, 0);
+
+// Desactivar el código HTML en los comentarios
+add_filter('pre_comment_content', 'wp_specialchars');
+
+/**********************************************************************************/
+/* Change Logo and footer Area Administration */
+/**********************************************************************************/
+// Cambiamos el logo para el formulario de acceso al wordpress
+function my_custom_login_logo() {
+    echo '<style type="text/css">h1 a {background-image:url('.get_bloginfo('template_directory').'/images/logo.png) !important; background-size: contain !important; width: 100% !important; padding: 15px 0 !important; background-position: center center !important;}</style>';
+}
+add_action('login_head', 'my_custom_login_logo');
+
+
+// Cambiar el pie de pagina del panel de Administración
+function change_footer_admin() {
+    echo 'Copyright © ' . date('Y') . ' Agencia Watson';
+}
+add_filter('admin_footer_text', 'change_footer_admin');

@@ -3,6 +3,7 @@
 	if(count($sticky)) {
 		if($currentCat) {
 			$args = array(
+				'posts_per_page' => 3,
 				'cat' => $currentCat,
 				'meta_query' => array(
 				    array(

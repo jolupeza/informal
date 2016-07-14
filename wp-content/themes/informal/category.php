@@ -7,13 +7,15 @@
 			$currentCat = get_cat_id(single_cat_title("", false));
 			$catMeta = get_option("category_" . $currentCat);
 			$color = (isset($catMeta['mb_colour']) && !empty($catMeta['mb_colour'])) ? esc_attr($catMeta['mb_colour']) : '';
+
+			$dataCategory = get_category($currentCat);
 		?>
 
 		<!-- Etiquetas -->
 		<aside class="Main-tags hidden-xs hidden-sm">
 			<?php
 				$categories = get_categories(array('parent' => (!$thisCat->category_parent) ? $currentCat : $thisCat->category_parent, 'orderby' => 'count', 'order' => 'DESC'));
-				if(count($categories)) {
+				if(count($categories)) :
 			?>
 				<ul class="Main-tags-list list-inline">
 					<li class="Main-tags-item Main-tags-item--first text-uppercase">Categorías</li>
@@ -24,28 +26,35 @@
 						</li>
 					<?php endforeach; ?>
 				</ul>
-			<?php
-				}
-			?>
+			<?php endif; ?>
 		</aside><!-- end Main-tags -->
 
 		<!-- Post featured -->
-		<?php include(TEMPLATEPATH . '/includes/featured-posts.php') ?>
+		<?php if ($dataCategory->parent === 0) : ?>
+			<?php
+				$file = TEMPLATEPATH . '/includes/featured-posts.php';
+				if (file_exists($file)) {
+					include($file);
+				}
+			?>
+		<?php endif; ?>
 
 		<section class="Main-content">
 			<div class="Main-content-wrapper">
 				<?php
 					global $wp_query;
-					$args = array(
-						'meta_query' => array(
-		                    array(
-		                        'key'   => 'mb_featured',
-		                        'value' => 'off'
-		                    )
-		                )
-					);
-					$args = array_merge($wp_query->query_vars, $args);
-					query_posts($args);
+					if ($dataCategory->parent === 0) {
+						$args = array(
+							'meta_query' => array(
+			                    array(
+			                        'key'   => 'mb_featured',
+			                        'value' => 'off'
+			                    )
+			                )
+						);
+						$args = array_merge($wp_query->query_vars, $args);
+						query_posts($args);
+					}
 
 					if(have_posts()) :
 						$i = 0;
@@ -97,7 +106,7 @@
 					<div class="Main-content-loader text-center hidden"><img src="<?php echo IMAGES; ?>/loading.gif" /></div>
 
 					<div class="Main-content-readmore">
-						<p class="text-center"><a href="" id="js-readmore-content" data-paged="1" data-author="0" data-category="<?php echo $currentCat; ?>" data-search="0" data-tag="0">Ver más</a></p>
+						<p class="text-center"><a href="" id="js-readmore-content" data-paged="1" data-author="0" data-category="<?php echo $currentCat; ?>" data-search="0" data-tag="0" data-parent="<?php echo $dataCategory->parent; ?>">Ver más</a></p>
 					</div><!-- end Main-content-readmore -->
 			<?php endif; ?>
 		</section><!-- end Main-content -->

@@ -312,6 +312,7 @@ function get_posts_callback()
     $category = $_POST['category'];
     $tag      = $_POST['tag'];
     $search   = $_POST['search'];
+    $parent   = (int)$_POST['parent'];
     $paged++;
 
     if ($paged > 0) {
@@ -335,13 +336,21 @@ function get_posts_callback()
             $args = array(
                 'cat'          => $category,
                 'paged'        => $paged,
-                'meta_query' => array(
+                /*'meta_query' => array(
                     array(
                         'key'   => 'mb_featured',
                         'value' => 'off'
                     )
-                ),
+                ),*/
             );
+            if ($parent === 0) {
+                $args['meta_query']  = array(
+                    array(
+                        'key'   => 'mb_featured',
+                        'value' => 'off'
+                    )
+                );
+            }
         } elseif($search && !$author && !$tag && !$category) {
             $search = sanitize_text_field($search);
             $args = array(

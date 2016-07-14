@@ -99,6 +99,7 @@ var j = jQuery.noConflict();
 			var category = $this.data('category');
 			var tag      = $this.data('tag');
 			var search   = $this.data('search');
+			var parent   = parseInt($this.data('parent'));
 			var loader   = j('.Main-content-loader');
 			var content  = j('.Main-content-wrapper');
 
@@ -112,7 +113,8 @@ var j = jQuery.noConflict();
 					author: author,
 					category: category,
 					tag: tag,
-					search: search
+					search: search,
+					parent: parent
 				}, function(data){
 					loader.addClass('hidden');
 					if(data.result) {

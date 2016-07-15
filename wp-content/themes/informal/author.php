@@ -1,41 +1,31 @@
 <?php get_header(); ?>
+	<?php
+		// global $current_user;
 
-	<main class="container Main">
-		<section class="Main-content">
+		$curauth = (get_query_var('author_name')) ? get_user_by('slug', get_query_var('author_name')) : get_userdata(get_query_var('author'));
+		$authorId = $curauth->ID;
+		// $usermeta = get_userdata($authorId);
+
+		// $current_user = wp_get_current_user();
+		// dump($usermeta);
+
+		$authorName = get_user_meta($authorId, 'first_name', true);
+		$authorLastName = get_user_meta($authorId, 'last_name', true);
+		$authorDescription = get_user_meta($authorId, 'description', true);
+		$authorFacebook = get_user_meta($authorId, 'facebook', true);
+		$authorTwitter = get_user_meta($authorId, 'twitter', true);
+		$authorBlog = get_user_meta($authorId, 'blog', true);
+		$authorBg = get_user_meta($authorId, 'bg', true);
+	?>
+
+	<section class="Author-bg">
+		<img src="<?php echo $authorBg; ?>" alt="<?php echo $authorBlog; ?>" class="img-responsive center-block">
+	</section>
+
+	<main class="container Main Author-main">
+		<section class="Main-content Author-content">
 			<?php if(have_posts()) : ?>
 				<article class="Main-content-item Main-content-item--single">
-					<?php
-						$curauth = (get_query_var('author_name')) ? get_user_by('slug', get_query_var('author_name')) : get_userdata(get_query_var('author'));
-						$authorId = $curauth->ID;
-						$usermeta = get_userdata($authorId);
-						$authorDescription = get_user_meta($authorId, 'description', true);
-						$authorFacebook = get_user_meta($authorId, 'facebook', true);
-						$authorTwitter = get_user_meta($authorId, 'twitter', true);
-						$authorBlog = get_user_meta($authorId, 'blog', true);
-					?>
-					<aside class="Main-content-metaauthor">
-						<figure class="Main-content-avatar">
-							<?php echo get_avatar($authorId, 128, '', false, array('class' => 'img-circle center-block')); ?>
-						</figure><!-- end Main-content-avatar -->
-						<div class="Main-content-metaauthor-info">
-							<h4 class="Main-content-metaauthor-blog"><?php echo $authorBlog; ?></h4>
-							<h3 class="Main-content-metaauthor-name"><?php the_author(); ?></h3>
-							<p class="Main-content-metaauthor-desc"><?php echo $authorDescription; ?></p>
-
-							<?php if(!empty($authorFacebook) || !empty($authorTwitter)) : ?>
-								<ul class="list-inline Main-content-metaauthor-social">
-									<?php if(!empty($authorFacebook)) : ?>
-										<li class="Metaauthor-fb"><a class="text-hide" href="https://www.facebook.com/profile.php?id=<?php echo $authorFacebook; ?>" title="Facebook" target="_blank">F</a></li>
-									<?php endif; ?>
-
-									<?php if(!empty($authorTwitter)) : ?>
-										<li class="Metaauthor-tw"><a class="text-hide" href="https://twitter.com/<?php echo $authorTwitter; ?>" title="Twitter" target="_blank">T</a></li>
-									<?php endif; ?>
-								</ul><!-- end Main-content-metaauthor-social -->
-							<?php endif; ?>
-						</div><!-- end Main-content-author-info -->
-					</aside><!-- end Main-content-author -->
-
 					<div class="Main-content-wrapper">
 						<?php while(have_posts()) : the_post(); ?>
 							<article class="Main-content-item Main-content-item--second">
@@ -79,7 +69,31 @@
 			<?php endif; ?>
 		</section><!-- end Main-content -->
 
-		<aside class="Main-sidebar">
+		<aside class="Main-sidebar Author-sidebar">
+			<aside class="Main-content-metaauthor">
+				<figure class="Main-content-avatar">
+					<?php echo get_avatar($authorId, 128, '', false, array('class' => 'img-circle center-block')); ?>
+				</figure><!-- end Main-content-avatar -->
+				<div class="Main-content-metaauthor-info">
+					<h3 class="Main-content-metaauthor-name"><?php echo "$authorName $authorLastName"; ?></h3>
+					<!-- <h3 class="Main-content-metaauthor-name"><?php // the_author(); ?></h3> -->
+					<h4 class="Main-content-metaauthor-blog"><?php echo $authorBlog; ?></h4>
+					<p class="Main-content-metaauthor-desc"><?php echo $authorDescription; ?></p>
+
+					<?php if(!empty($authorFacebook) || !empty($authorTwitter)) : ?>
+						<ul class="list-inline Main-content-metaauthor-social">
+							<?php if(!empty($authorFacebook)) : ?>
+								<li class="Metaauthor-fb"><a class="text-hide" href="<?php echo $authorFacebook; ?>" title="Facebook" target="_blank">F</a></li>
+							<?php endif; ?>
+
+							<?php if(!empty($authorTwitter)) : ?>
+								<li class="Metaauthor-tw"><a class="text-hide" href="https://twitter.com/<?php echo $authorTwitter; ?>" title="Twitter" target="_blank">T</a></li>
+							<?php endif; ?>
+						</ul><!-- end Main-content-metaauthor-social -->
+					<?php endif; ?>
+				</div><!-- end Main-content-author-info -->
+			</aside><!-- end Main-content-author -->
+
 			<?php get_sidebar('single'); ?>
 		</aside><!-- end Main-sidebar -->
 	</main><!-- end container Main -->

@@ -420,10 +420,11 @@ class Informal_Manager_Admin {
      */
     public function modify_user_contact_methods($user_contact) {
         // Add user contact methods
-        $user_contact['facebook'] = __('Facebook Uername', THEMEDOMAIN);
+        $user_contact['facebook'] = __('Facebook Username', THEMEDOMAIN);
         $user_contact['twitter'] = __('Twitter Username', THEMEDOMAIN);
         $user_contact['youtube'] = __('Youtube Username', THEMEDOMAIN);
         $user_contact['blog'] = __('Blog', THEMEDOMAIN);
+        $user_contact['bg'] = __('Imagen Blog', THEMEDOMAIN);
 
         return $user_contact;
     }

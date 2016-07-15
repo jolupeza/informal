@@ -582,19 +582,14 @@ body
 		color: $title_color
 .Main-content-metaauthor
 	border: 1px solid #c5c5c5
-	margin: 20px 0
+	margin-bottom: 15px
 	padding: 15px
-.Main-content-avatar, .Main-content-metaauthor-info
-	display: inline-block
-	vertical-align: top
 .Main-content-avatar
-	margin-right: 15px
+	margin-bottom: 15px
 	padding: 10px
-	width: 148px
 	img
 		border: 8px solid #cacaca
-.Main-content-metaauthor-info
-	width: 75%
+// .Main-content-metaauthor-info
 .Main-content-metaauthor-blog
 	color: $purple_soft
 	font-family: "Roboto"
@@ -609,6 +604,7 @@ body
 		color: $title_color
 .Main-content-metaauthor-desc
 	color: $title_color
+	font-family: "Roboto", sans-serif
 	font-weight: 300
 .Metaauthor-fb, .Metaauthor-tw
 	a
@@ -628,13 +624,24 @@ body
 		background-position: -50px -30px
 		&:hover
 			background-position: -90px -30px
+.Author-bg
+	background-color: #3806f3
+	padding: 15px 0 0 0
+.Author-main
+	// +display-flex()
+	// +justify-content(space-between)
+	margin-top: -15px
+	position: relative
+	z-index: 9
+// .Author-content
+// 	+flex-basis(65%)
+// .Author-sidenar
+// 	+flex-basis(380px)
 @media only screen and (max-width: 1050px)
 	.Main-popular
 		width: 40%
 	.Main-sidebar
 		width: 300px
-	.Main-content-metaauthor-info
-		width: 70%
 @media only screen and (max-width: 991px)
 	.Main-popular
 		display: block
@@ -672,10 +679,10 @@ body
 @media only screen and (max-width: 767px)
 	.Main-lastCategory-title
 		font-size: 1.25em
-@media only screen and (max-width: 500px)
-	.Main-content-avatar, .Main-content-metaauthor-info
-		display: block
-		width: 100%
+// @media only screen and (max-width: 500px)
+// 	.Main-content-avatar, .Main-content-metaauthor-info
+// 		display: block
+// 		width: 100%
 @media only screen and (max-width: 450px)
 	.Main-subfeatured-item
 		&.Main-subfeatured-item--second
@@ -1494,7 +1501,10 @@ body
 	right: 0
 	top: 0
 
-
+@media only screen and (min-width: 992px) and (max-width: 1100px)
+	.WidgetCalendar-events
+		h5
+			margin-top: 40px
 @media only screen and (max-width: 600px)
 	.WidgetCalendar
 		&.Calendar-horizontal
@@ -1503,7 +1513,10 @@ body
 				width: 100%
 			.WidgetCalendar-events
 				padding-left: 0
-
+@media only screen and (max-width: 340px)
+	.WidgetCalendar-events
+		h5
+			margin-top: 40px
 
 +keyframes(slideInUp)
 	from

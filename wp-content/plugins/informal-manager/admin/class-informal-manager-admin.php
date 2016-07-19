@@ -425,6 +425,8 @@ class Informal_Manager_Admin {
         $user_contact['youtube'] = __('Youtube Username', THEMEDOMAIN);
         $user_contact['blog'] = __('Blog', THEMEDOMAIN);
         $user_contact['bg'] = __('Imagen Blog', THEMEDOMAIN);
+        $user_contact['color'] = __('Color', THEMEDOMAIN);
+        $user_contact['avatar'] = __('Avatar', THEMEDOMAIN);
 
         return $user_contact;
     }

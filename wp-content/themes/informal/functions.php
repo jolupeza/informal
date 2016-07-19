@@ -203,6 +203,17 @@ if (function_exists('register_sidebar')) {
             'after_title' => '</h4>'
         )
     );
+    register_sidebar(
+        array(
+            'name' => __('Author Sidebar', THEMEDOMAIN),
+            'id' => 'author',
+            'description' => __('Sidebar a mostrar en la página de autores.', THEMEDOMAIN),
+            'before_widget' => '<div class="SidebarWidget">',
+            'after_widget' => '</div> <!-- end SidebarWidget -->',
+            'before_title' => '<h4>',
+            'after_title' => '</h4>'
+        )
+    );
 }
 
 // Check is registered email
@@ -707,6 +718,7 @@ require_once('functions/widget-publicidadgoogle-300.php');
 require_once('functions/widget-banner-300.php');
 require_once('functions/widget-posts-popular.php');
 require_once('functions/widget-events-calendar.php');
+require_once('functions/widget-authors-related.php');
 
 /*
  * Dump helper. Functions to dump variables to the screen, in a nicley formatted manner.

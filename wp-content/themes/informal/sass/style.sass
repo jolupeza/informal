@@ -591,13 +591,14 @@ body
 		border: 8px solid #cacaca
 // .Main-content-metaauthor-info
 .Main-content-metaauthor-blog
-	color: $purple_soft
 	font-family: "Roboto"
-	font-size: 1.125em
+	font-size: 1em
 	margin-top: 0
+	span
+		color: $purple_soft
 .Main-content-metaauthor-name
 	font-family: "Roboto"
-	font-size: 1.375em
+	font-size: 1.5em
 	font-weight: 700
 	margin-top: 0
 	a
@@ -625,7 +626,6 @@ body
 		&:hover
 			background-position: -90px -30px
 .Author-bg
-	background-color: #3806f3
 	padding: 15px 0 0 0
 .Author-main
 	// +display-flex()
@@ -635,8 +635,33 @@ body
 	z-index: 9
 // .Author-content
 // 	+flex-basis(65%)
-// .Author-sidenar
+// .Author-sidebar
 // 	+flex-basis(380px)
+.Author-figure
+	position: relative
+.Author-info
+	background-color: rgba(black, 0.3)
+	bottom: 0
+	padding: 25px
+	position: absolute
+	width: 100%
+.Author-title
+	color: white
+	font-family: "Roboto", sans-serif
+	font-size: 1.875em
+	font-weight: 700
+	margin: 0
+	a
+		color: white
+.Author-blogTitle
+	color: white
+	font-family: "Roboto", sans-serif
+	font-size: 2.5em
+	font-weight: 700
+	margin: 0
+	img
+		display: inline-block
+		margin-right: 15px
 @media only screen and (max-width: 1050px)
 	.Main-popular
 		width: 40%
@@ -851,6 +876,9 @@ body
 	vertical-align: top
 .PostsPopular-image
 	width: 40%
+.PostsAuthor-image
+	img
+		border: 7px solid #cacaca
 .PostsPopular-info
 	padding: 0 0 10px 10px
 	width: 60%
@@ -867,6 +895,22 @@ body
 	font-size: 0.875em
 	span
 		color: $morado
+.PostsAuthor-title
+	font-family: "Roboto", sans-serif
+	font-size: 1.375em
+	font-weight: 700
+	margin-bottom: 5px
+	margin-top: 20px
+	a
+		color: #575252
+		&:hover
+			text-decoration: none
+.PostsBlog-title
+	color: $purple_soft
+	font-family: "Roboto", sans-serif
+	font-size: 1.125em
+	font-weight: 400
+	margin: 0
 @media only screen and (max-width: 991px)
 	.PostsPopular-title
 		font-size: 1.375em

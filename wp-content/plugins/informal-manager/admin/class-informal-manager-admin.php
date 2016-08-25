@@ -218,7 +218,7 @@ class Informal_Manager_Admin {
 
     // Filter posts y subfeatured
     public function post_table_filter($query) {
-        if (!current_user_can('manage_options'))
+        if (!current_user_can('edit_published_posts'))
             return;
 
         if (is_admin() && $query->query['post_type'] == 'post') {
